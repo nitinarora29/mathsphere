@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MathSphere — Applied Engineering Mathematics I</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<style>
+:root{
+  --ink:#1b2430; --paper:#f6f3ec; --panel:#ffffff; --line:#d9d3c4;
+  --accent:#b5793a; --accent2:#3a6b7a; --good:#3f7d54; --bad:#b1473f;
+  --muted:#7a7264; --font-d:'Iowan Old Style','Palatino Linotype',Georgia,serif;
+  --font-b:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-m:'SF Mono',Consolas,monospace;
+  --radius:10px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+[data-theme="dark"]{--ink:#e9e4d8;--paper:#191d24;--panel:#22272f;--line:#333a45;--accent:#e0a458;--accent2:#6fb3c4;--muted:#8b93a3;}
+[data-theme="midnight"]{--ink:#dfe6f5;--paper:#0b0f1e;--panel:#131a2e;--line:#243055;--accent:#7c9cff;--accent2:#5fd6c4;--muted:#7a86ad;}
+[data-theme="purple"]{--ink:#2c1c3a;--paper:#f3edf9;--panel:#ffffff;--line:#ded0ef;--accent:#7a3fd1;--accent2:#c14f8f;--muted:#8a7a9c;}
+[data-theme="nature"]{--ink:#1f2e21;--paper:#f1f3e8;--panel:#ffffff;--line:#d6dfc4;--accent:#4c7a3a;--accent2:#b3894a;--muted:#748268;}
+[data-theme="minimal"]{--ink:#111;--paper:#fff;--panel:#fff;--line:#e5e5e5;--accent:#111;--accent2:#555;--muted:#888;--radius:2px;}
+*{scroll-padding-top:env(safe-area-inset-top,0px);}
+html,body{height:100%;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-b);transition:background .3s,color .3s;}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+h1,h2,h3{font-family:var(--font-d);font-weight:600;margin:0 0 .3em;}
+a,button{font-family:inherit;}
+.app{display:flex;min-height:100vh;}
+.side{width:230px;background:var(--panel);border-right:1px solid var(--line);padding:20px 14px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.brand{font-family:var(--font-d);font-size:1.35rem;font-weight:700;margin-bottom:22px;display:flex;align-items:center;gap:8px;color:var(--accent);}
+.nav-item{display:block;width:100%;text-align:left;background:none;border:none;padding:10px 12px;border-radius:var(--radius);color:var(--ink);cursor:pointer;font-size:.95rem;margin-bottom:2px;}
+.nav-item:hover{background:var(--paper);}
+.nav-item.active{background:var(--accent);color:var(--panel);}
+.main{flex:1;padding:28px 32px 90px;max-width:980px;margin:0 auto;width:100%;}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:.85rem;margin-right:8px;}
+.hero{padding:34px 0 22px;border-bottom:1px solid var(--line);margin-bottom:26px;}
+.hero h1{font-size:2.1rem;}
+.hero p{color:var(--muted);margin:0 0 16px;}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;}
+.btn{background:var(--accent);color:var(--panel);border:none;padding:11px 20px;border-radius:var(--radius);cursor:pointer;font-size:.92rem;font-weight:600;}
+.btn.ghost{background:none;color:var(--accent);border:1px solid var(--accent);}
+.btn:disabled{opacity:.5;cursor:default;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
+.card h3{font-size:1.05rem;}
+.progress{height:8px;background:var(--paper);border-radius:5px;overflow:hidden;margin:8px 0;}
+.progress i{display:block;height:100%;background:var(--accent2);}
+.locked{opacity:.55;}
+.topic-row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;background:var(--panel);cursor:pointer;}
+.topic-row:hover{border-color:var(--accent);}
+.badge{width:22px;height:22px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;}
+.badge.done{background:var(--good);color:#fff;border-color:var(--good);}
+section.block{margin-bottom:22px;}
+.formula-box{background:var(--paper);border-left:3px solid var(--accent);padding:12px 16px;border-radius:6px;margin:10px 0;overflow-x:auto;}
+.example{border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;background:var(--panel);}
+.example h4{margin:0 0 6px;font-size:.9rem;color:var(--accent2);}
+.qcard{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:var(--panel);margin-bottom:14px;}
+.opt{display:block;width:100%;text-align:left;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);margin:6px 0;cursor:pointer;}
+.opt:hover{border-color:var(--accent);}
+.opt.correct{background:var(--good);color:#fff;border-color:var(--good);}
+.opt.wrong{background:var(--bad);color:#fff;border-color:var(--bad);}
+.tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);}
+.themes{display:flex;gap:10px;flex-wrap:wrap;}
+.theme-sw{padding:10px 14px;border-radius:var(--radius);border:1px solid var(--line);cursor:pointer;background:var(--panel);}
+.theme-sw.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset;}
+.searchbar{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink);font-size:1rem;margin-bottom:16px;}
+.streakcal{display:flex;gap:6px;}
+.sday{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;background:var(--paper);border:1px solid var(--line);}
+.sday.hit{background:var(--accent);color:var(--panel);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 22px;border-radius:30px;font-size:.9rem;z-index:99;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+.bookmark{cursor:pointer;font-size:1.1rem;background:none;border:none;}
+.mobilebar{display:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px) scale(.985);filter:blur(3px);}to{opacity:1;transform:none;filter:blur(0);}}
+@keyframes blobMove{0%,100%{transform:translate(-10%,-10%);}50%{transform:translate(40%,30%);}}
+@keyframes symDrift{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-30px) rotate(6deg);}}
+@keyframes brandGlow{0%,100%{filter:drop-shadow(0 0 0 var(--accent));}50%{filter:drop-shadow(0 0 7px var(--accent));}}
+@keyframes introPulse{0%{transform:scale(.4) rotate(-15deg);opacity:0;}60%{transform:scale(1.15) rotate(5deg);opacity:1;}100%{transform:scale(1) rotate(0);opacity:1;}}
+@keyframes introFade{to{opacity:1;}}
+#bgfx{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+#bgfx .blob{position:absolute;width:60vmax;height:60vmax;border-radius:50%;background:radial-gradient(circle,var(--accent) 0%,transparent 70%);opacity:.07;filter:blur(50px);animation:blobMove 34s ease-in-out infinite;}
+#bgfx .blob.b2{background:radial-gradient(circle,var(--accent2) 0%,transparent 70%);animation-duration:42s;animation-delay:-14s;top:30%;left:40%;}
+#bgfx .sym{position:absolute;font-family:var(--font-d);opacity:.10;color:var(--accent2);animation:symDrift 24s ease-in-out infinite;}
+.app{position:relative;z-index:1;}
+.brand{animation:brandGlow 4s ease-in-out infinite;}
+.toast.badge{background:var(--accent);color:#fff;font-weight:600;}
+#introOverlay{position:fixed;inset:0;z-index:999;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;transition:opacity .6s ease,visibility .6s;}
+#introOverlay.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.introMark{font-family:var(--font-d);font-size:4.5rem;color:var(--accent);animation:introPulse 1.6s ease forwards;}
+.introTitle{font-family:var(--font-d);font-size:1.25rem;letter-spacing:.02em;color:var(--ink);opacity:0;animation:introFade .8s ease .5s forwards;}
+@media(prefers-reduced-motion:reduce){#introOverlay{display:none;}.brand{animation:none;}#bgfx{display:none;}}
+@keyframes pop{0%{transform:scale(.94)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
+.fade-in{animation:fadeUp .35s ease both;}
+.fade-in .card,.fade-in .topic-row,.fade-in .qcard{animation:fadeUp .4s ease both;}
+.opt.correct,.opt.wrong,.badge.done{animation:pop .3s ease;}
+button{transition:transform .12s ease,background .2s ease,border-color .2s ease;}
+button:active{transform:scale(.96);}
+.card,.topic-row{transition:transform .18s ease,border-color .18s ease;}
+.card:hover{transform:translateY(-3px);}
+.topic-row:hover{transform:translateX(2px);}
+.progress i{transition:width .6s ease;}
+.timerbar{height:6px;background:var(--paper);border-radius:4px;overflow:hidden;margin:12px 0;}
+.timerbar i{display:block;height:100%;background:var(--accent2);transition:width 1s linear;}
+.game-choice{display:block;width:100%;text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);margin:6px 0;cursor:pointer;font-size:1rem;}
+.game-choice:hover{border-color:var(--accent);}
+.game-choice.correct{background:var(--good);color:#fff;border-color:var(--good);animation:pop .3s ease;}
+.game-choice.wrong{background:var(--bad);color:#fff;border-color:var(--bad);animation:pop .3s ease;}
+@media(max-width:760px){
+  .side{display:none;}
+  .main{padding:16px 16px 90px;}
+  .mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);padding:8px 4px calc(8px + env(safe-area-inset-bottom,0px));justify-content:space-around;z-index:50;}
+  .mobilebar button{background:none;border:none;color:var(--muted);font-size:.68rem;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .mobilebar button.active{color:var(--accent);}
+}
+</style>
+</head>
+<body>
+<div id="introOverlay"><div class="introMark">∞</div><div class="introTitle">MathSphere</div></div>
+<div id="bgfx">
+  <div class="blob"></div><div class="blob b2"></div>
+  <span class="sym" style="top:12%;left:8%;font-size:2.6rem;animation-delay:0s">∫</span>
+  <span class="sym" style="top:65%;left:15%;font-size:2rem;animation-delay:-4s">Σ</span>
+  <span class="sym" style="top:22%;left:80%;font-size:3rem;animation-delay:-9s">π</span>
+  <span class="sym" style="top:78%;left:72%;font-size:2.2rem;animation-delay:-14s">λ</span>
+  <span class="sym" style="top:45%;left:50%;font-size:2.4rem;animation-delay:-6s">∞</span>
+  <span class="sym" style="top:8%;left:45%;font-size:1.8rem;animation-delay:-11s">√</span>
+  <span class="sym" style="top:88%;left:35%;font-size:2rem;animation-delay:-18s">Δ</span>
+</div>
+<div class="app">
+  <nav class="side" id="side"></nav>
+  <main class="main" id="main"></main>
+</div>
+<div class="mobilebar" id="mbar"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- DATA ---------- */
+const NAV = [
+  ['home','🏠 Home'],['learn','📘 Learn'],['formulas','∑ Formulas'],['games','🎮 Games'],
+  ['dashboard','📊 Dashboard'],['achievements','🏅 Achievements'],['settings','⚙️ Settings']
+];
+
+const UNITS = [
+  {id:1,title:'Matrices',icon:'▦',topics:['rref','gj','eigen','lu','crypto','homo','diag']},
+  {id:2,title:'Probability',icon:'🎲',topics:['prob1','bayes']},
+  {id:3,title:'Statistics, Correlation & Curve Fitting',icon:'📈',topics:['stat1','corr1','curve1']},
+  {id:4,title:'Vector Space',icon:'📐',topics:['vec1','basis1']},
+  {id:5,title:'Multivariable Calculus',icon:'∂',topics:['limit1','maxima1']},
+];
+
+// Fully built topics (unit 1 core). Others are stub placeholders ("coming soon").
+const TOPICS = {
+  rref: {
+    unit:1, title:'Row Echelon Form & Rank',
+    concept:"A matrix is in row echelon form (REF) when all zero rows sit at the bottom and each row's first nonzero entry (the pivot) lies strictly right of the pivot above it. The rank of a matrix is simply the number of nonzero rows once it's in this form — it tells you how many independent equations or directions the matrix actually contains.",
+    key:"Think of REF as 'staircase' shape: each row starts further right than the one before. Row operations (swap, scale, add a multiple of one row to another) never change the rank, only the appearance.",
+    formula:"\\text{rank}(A) = \\text{number of nonzero rows in REF}(A)",
+    method:["Pick a pivot column and use row swaps to bring a nonzero entry to the top.","Use row operations to zero out every entry below that pivot.","Move to the next row and column, repeat.","Count nonzero rows — that count is the rank."],
+    mistakes:"Students often forget that scaling a row by zero is not allowed, or they eliminate above the pivot too early (that's needed for RREF, not REF).",
+    tip:"If a square matrix's rank equals its size, it's invertible. Rank deficiency is often the fastest way to spot dependent equations.",
+    examples:[
+      {level:'Basic',q:'Find the rank of \\begin{bmatrix}1&2\\\\2&4\\end{bmatrix}.',given:'A 2×2 matrix.',need:'rank(A).',steps:['R2 → R2 − 2R1 gives \\begin{bmatrix}1&2\\\\0&0\\end{bmatrix}','Only one nonzero row remains.'],answer:'rank(A) = 1'},
+      {level:'Intermediate',q:'Find the rank of \\begin{bmatrix}1&1&2\\\\2&1&3\\\\3&2&5\\end{bmatrix}.',given:'A 3×3 matrix.',need:'rank(A).',steps:['R2→R2−2R1, R3→R3−3R1: \\begin{bmatrix}1&1&2\\\\0&-1&-1\\\\0&-1&-1\\end{bmatrix}','R3→R3−R2: \\begin{bmatrix}1&1&2\\\\0&-1&-1\\\\0&0&0\\end{bmatrix}'],answer:'rank(A) = 2'},
+      {level:'Exam-level',q:'For what value of k does \\begin{bmatrix}1&2&3\\\\2&4&k\\end{bmatrix} have rank 1?',given:'A parametrized 2×3 matrix.',need:'value of k.',steps:['R2−2R1 = [0, 0, k−6]','Rank is 1 only if this row is entirely zero, so k−6=0.'],answer:'k = 6'},
+    ],
+    practice:[
+      {type:'MCQ',q:'The rank of a 4×4 zero matrix is:',opts:['0','1','4','undefined'],ans:0,exp:'Every row is zero, so there are zero nonzero rows.'},
+      {type:'MCQ',q:'Row operations on a matrix can change:',opts:['its rank','its appearance but not its rank','both rank and dependency structure','none of it'],ans:1,exp:'Elementary row operations preserve rank and the solution set of the associated system.'},
+      {type:'Numerical',q:'Rank of \\begin{bmatrix}1&0\\\\0&1\\end{bmatrix} is?',opts:['0','1','2','3'],ans:2,exp:'It is already in REF with 2 nonzero rows — full rank.'},
+      {type:'Conceptual',q:'A 3×3 matrix has rank 2. What does this tell you about its rows?',opts:['All rows are independent','Exactly one row is a linear combination of the others','All rows are equal','It has no solution'],ans:1,exp:'Rank 2 out of 3 rows means exactly one row is dependent on the others.'},
+      {type:'Application',q:'A system of 3 equations in 3 unknowns has coefficient-matrix rank 2. The system is:',opts:['always inconsistent','consistent with a unique solution','consistent with infinitely many solutions (if consistent) or inconsistent','none'],ans:2,exp:'Rank < number of unknowns means no unique solution — either infinite solutions or none, depending on the augmented matrix.'},
+      {type:'MCQ',q:'REF requires:',opts:['all pivots equal 1','zeros above every pivot','pivots strictly increasing left to right down the rows','zero rows at the top'],ans:2,exp:"That's the defining staircase property of REF (RREF adds the '1' and 'zeros above' conditions)."},
+    ],
+    quiz:[
+      {q:'Rank of an n×n identity matrix?',opts:['0','n','1','n²'],ans:1},
+      {q:'A zero row in REF means:',opts:['error in calculation','a dependent equation','matrix is invertible','nothing'],ans:1},
+      {q:'Elementary row operations include all of these EXCEPT:',opts:['swap two rows','multiply a row by a nonzero scalar','add a multiple of one row to another','multiply a column by a scalar'],ans:3},
+    ]
+  },
+  gj: {
+    unit:1, title:'Gauss-Jordan Method & Inverse',
+    concept:"Gauss-Jordan extends row reduction all the way to Reduced Row Echelon Form (RREF), where every pivot is 1 and each pivot column has zeros both above and below it. Applying it to [A | I] and reducing A to I turns the identity side into A⁻¹.",
+    key:"RREF is REF taken one step further — it's the 'fully simplified' form of a matrix, and it directly reads off the inverse or the solution set.",
+    formula:"[A \\mid I] \\xrightarrow{\\text{row ops}} [I \\mid A^{-1}]",
+    method:["Augment A with the identity matrix.","Row reduce until the left block becomes the identity.","The right block is now A⁻¹.","Verify with AA⁻¹ = I."],
+    mistakes:"A very common error is applying an operation to only part of the augmented row, or forgetting the matrix is singular (no inverse) if a zero row appears on the left side.",
+    tip:"If you hit a full zero row on the left during Gauss-Jordan, stop — the matrix has no inverse.",
+    examples:[
+      {level:'Basic',q:'Find the inverse of \\begin{bmatrix}2&0\\\\0&2\\end{bmatrix}.',given:'A diagonal 2×2 matrix.',need:'A⁻¹.',steps:['Divide each row by 2.'],answer:'A^{-1}=\\begin{bmatrix}0.5&0\\\\0&0.5\\end{bmatrix}'},
+      {level:'Intermediate',q:'Find A⁻¹ for \\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}.',given:'A 2×2 matrix, det = −2.',need:'A⁻¹.',steps:['Augment with I, reduce: R2→R2−3R1 → \\begin{bmatrix}1&2&|&1&0\\\\0&-2&|&-3&1\\end{bmatrix}','R2→R2/(−2), then R1→R1−2R2'],answer:'A^{-1}=\\begin{bmatrix}-2&1\\\\1.5&-0.5\\end{bmatrix}'},
+      {level:'Exam-level',q:'Solve x+2y=5, 3x+4y=6 using the inverse found above.',given:'Same A, b=[5,6]ᵀ.',need:'x, y.',steps:['x = A^{-1}b = [-2(5)+1(6), 1.5(5)-0.5(6)]'],answer:'x=-4, y=4.5'},
+    ],
+    practice:[
+      {type:'MCQ',q:'RREF differs from REF because RREF also requires:',opts:['zero rows at bottom','pivots = 1 and zeros above pivots too','negative pivots','nothing extra'],ans:1,exp:'RREF is the unique canonical form: leading 1s with zeros both above and below.'},
+      {type:'Conceptual',q:'A square matrix has an inverse if and only if:',opts:['it is symmetric','its rank equals its size (full rank)','it has a zero entry','it is diagonal'],ans:1,exp:'Full rank ⇔ invertible for square matrices.'},
+      {type:'Numerical',q:'Inverse of \\begin{bmatrix}1&0\\\\0&5\\end{bmatrix} is?',opts:['itself','\\begin{bmatrix}1&0\\\\0&0.2\\end{bmatrix}','\\begin{bmatrix}5&0\\\\0&1\\end{bmatrix}','no inverse'],ans:1,exp:'Diagonal inverse: reciprocal of each diagonal entry.'},
+      {type:'Application',q:'Gauss-Jordan on [A|I] produces a zero row on the left side. This means:',opts:['A is invertible','A is singular, no inverse exists','make a row swap and continue','answer is I'],ans:1,exp:'A zero row on the coefficient side proves rank < n, so no inverse exists.'},
+      {type:'Short-answer',q:'How many augmented columns does [A|I] have if A is 3×3?',opts:['3','6','9','12'],ans:1,exp:'3 columns from A plus 3 from I = 6.'},
+    ],
+    quiz:[
+      {q:'RREF pivots must equal:',opts:['0','1','the row number','any nonzero value'],ans:1},
+      {q:'[A|I] reduces to [I|X]. X equals:',opts:['A','A^T','A^{-1}','0'],ans:2},
+      {q:'A matrix with rank < n (n×n) is:',opts:['invertible','singular','symmetric','diagonal'],ans:1},
+    ]
+  },
+  eigen: {
+    unit:1, title:'Eigenvalues & Eigenvectors',
+    concept:"An eigenvector of A is a nonzero vector v whose direction A leaves unchanged — A only stretches or shrinks it by a factor λ, the eigenvalue. Eigenvalues solve det(A − λI) = 0, the characteristic equation.",
+    key:"Eigenvalues describe how a transformation scales space along special directions; this underlies stability analysis, vibration modes, PCA, and more.",
+    formula:"Av=\\lambda v \\quad\\Longleftrightarrow\\quad \\det(A-\\lambda I)=0",
+    method:["Form A − λI.","Set its determinant to 0 — the characteristic polynomial.","Solve for λ (the eigenvalues).","For each λ, solve (A − λI)v = 0 for the eigenvector v."],
+    mistakes:"Forgetting that eigenvectors are only defined up to scalar multiples, or mixing up the sign in A − λI vs λI − A.",
+    tip:"Sum of eigenvalues = trace(A); product of eigenvalues = det(A) — a fast way to check your answer.",
+    examples:[
+      {level:'Basic',q:'Find eigenvalues of \\begin{bmatrix}2&0\\\\0&3\\end{bmatrix}.',given:'Diagonal matrix.',need:'λ values.',steps:['For a diagonal matrix, eigenvalues are the diagonal entries themselves.'],answer:'λ = 2, 3'},
+      {level:'Intermediate',q:'Find eigenvalues of \\begin{bmatrix}4&1\\\\2&3\\end{bmatrix}.',given:'trace=7, det=10.',need:'λ values.',steps:['Characteristic eq: λ² − 7λ + 10 = 0','Factor: (λ−5)(λ−2)=0'],answer:'λ = 5, 2'},
+      {level:'Exam-level',q:'Find the eigenvector of \\begin{bmatrix}4&1\\\\2&3\\end{bmatrix} for λ=5.',given:'λ=5 from previous example.',need:'eigenvector v.',steps:['(A−5I)v=0 → \\begin{bmatrix}-1&1\\\\2&-2\\end{bmatrix}v=0','−v1+v2=0 → v1=v2'],answer:'v = (1, 1)'},
+    ],
+    practice:[
+      {type:'MCQ',q:'Eigenvalues of a triangular matrix are:',opts:['always zero','the diagonal entries','the off-diagonal entries','undefined'],ans:1,exp:'For triangular (upper or lower) matrices, eigenvalues sit right on the diagonal.'},
+      {type:'Conceptual',q:'If λ=0 is an eigenvalue of A, then A is:',opts:['invertible','singular (non-invertible)','symmetric','diagonal'],ans:1,exp:'det(A)=product of eigenvalues; if one is 0, det(A)=0, so A is singular.'},
+      {type:'Numerical',q:'Sum of eigenvalues of \\begin{bmatrix}3&1\\\\0&5\\end{bmatrix} equals:',opts:['5','8','15','3'],ans:1,exp:'Sum of eigenvalues = trace = 3+5 = 8.'},
+      {type:'Application',q:'Product of eigenvalues of a matrix equals:',opts:['trace','determinant','rank','norm'],ans:1,exp:'A key identity: det(A) = product of all eigenvalues.'},
+      {type:'Short-answer',q:'Eigenvectors corresponding to the same eigenvalue can be:',opts:['scaled versions of each other','always unique','always orthogonal','never real'],ans:0,exp:'Eigenvectors form a subspace — any nonzero scalar multiple is also valid.'},
+    ],
+    quiz:[
+      {q:'Characteristic equation of A is:',opts:['det(A+λI)=0','det(A−λI)=0','A+λI=0','trace(A)=λ'],ans:1},
+      {q:'For a symmetric real matrix, eigenvalues are always:',opts:['complex','real','negative','zero'],ans:1},
+      {q:'If det(A)=0, at least one eigenvalue is:',opts:['1','−1','0','undefined'],ans:2},
+    ]
+  },
+  lu: {
+    unit:1, title:'LU Factorization',
+    concept:"LU factorization writes A = LU, where L is lower-triangular (with 1's on the diagonal) and U is upper-triangular — essentially recording the Gaussian elimination steps used to reach U, with the multipliers stored in L.",
+    key:"Once you have L and U, solving Ax=b becomes two easy triangular solves instead of one full elimination — very efficient when solving for many different b's.",
+    formula:"A = LU,\\quad Ax=b \\;\\Rightarrow\\; Ly=b,\\; Ux=y",
+    method:["Perform Gaussian elimination on A to get U, without row swaps if possible.","Record each multiplier used to eliminate below the pivot as the corresponding entry of L.","Set L's diagonal to 1.","Check: multiply L·U to confirm it reconstructs A."],
+    mistakes:"Sign errors on the multipliers (they go into L as positive values of the multiplier used, not negated), and forgetting the diagonal of L must be 1.",
+    tip:"If elimination requires a row swap, you need PA = LU (a permutation matrix P) — this is worth mentioning in exams.",
+    examples:[
+      {level:'Basic',q:'Factor \\begin{bmatrix}2&0\\\\4&1\\end{bmatrix} as LU.',given:'A 2×2 matrix.',need:'L and U.',steps:['Eliminate below pivot 2: multiplier = 4/2 = 2','R2 → R2 − 2R1 gives U row [0,1]'],answer:'L=\\begin{bmatrix}1&0\\\\2&1\\end{bmatrix}, U=\\begin{bmatrix}2&0\\\\0&1\\end{bmatrix}'},
+      {level:'Intermediate',q:'Factor \\begin{bmatrix}1&2\\\\3&8\\end{bmatrix}.',given:'A 2×2 matrix.',need:'L, U.',steps:['multiplier = 3/1 = 3','R2→R2−3R1: [0, 8−6]=[0,2]'],answer:'L=\\begin{bmatrix}1&0\\\\3&1\\end{bmatrix}, U=\\begin{bmatrix}1&2\\\\0&2\\end{bmatrix}'},
+      {level:'Exam-level',q:'Use the LU above to solve x+2y=5, 3x+8y=14.',given:'L,U from previous example, b=(5,14).',need:'x,y.',steps:['Ly=b: y1=5, 3(5)+y2=14 → y2=−1','Ux=y: 2x2=−1→x2=−0.5; x1+2(−0.5)=5→x1=6'],answer:'x=6, y=−0.5'},
+    ],
+    practice:[
+      {type:'MCQ',q:'In A=LU, the diagonal of L is:',opts:['all zero','all one','equal to U diagonal','undefined'],ans:1,exp:"By convention (Doolittle's method), L has 1's on its diagonal."},
+      {type:'Conceptual',q:'LU factorization is most useful when:',opts:['solving Ax=b once','solving Ax=b for many different b with same A','A is not square','A has complex entries'],ans:1,exp:'You factor once, then reuse L and U cheaply for each new b.'},
+      {type:'Numerical',q:'If a row swap is needed during elimination, we instead write:',opts:['A=UL','PA=LU','A=LU always','A⁻¹=LU'],ans:1,exp:'A permutation matrix P records the swap: PA=LU.'},
+      {type:'Application',q:'Solving Ly=b where L is lower triangular is done by:',opts:['back substitution','forward substitution','matrix inversion only','Cramer\'s rule'],ans:1,exp:'Lower-triangular systems solve top-to-bottom: forward substitution.'},
+      {type:'Short-answer',q:'U in LU factorization is:',opts:['lower triangular','upper triangular','diagonal only','symmetric'],ans:1,exp:'U is upper triangular by definition of the LU decomposition.'},
+    ],
+    quiz:[
+      {q:'L is:',opts:['upper triangular','lower triangular with 1s on diagonal','diagonal','symmetric'],ans:1},
+      {q:'Ax=b becomes, after LU factorization, two steps:',opts:['Ly=b then Ux=y','Ux=b then Ly=x','Uy=b then Lx=y','none'],ans:0},
+      {q:'A row swap during elimination requires writing:',opts:['A=LU','PA=LU','A=PLU^{-1}','A=UL'],ans:1},
+    ]
+  },
+  crypto:{unit:1,title:'Matrices in Cryptography',stub:true},
+  homo:{unit:1,title:'Homogeneous & Non-Homogeneous Systems',stub:true},
+  diag:{unit:1,title:'Diagonalization of Symmetric Matrices',stub:true},
+  prob1: {
+    unit:2, title:'Probability: Definitions & Theorems',
+    concept:"Probability measures how likely an event is, on a scale from 0 (impossible) to 1 (certain). If an experiment has n equally likely outcomes and an event A can happen in m of them, P(A) = m/n. The core theorems — addition, complement, and total probability — let you build up probabilities of complex events from simpler pieces.",
+    key:"Think of probability as 'share of the outcome space.' The addition theorem accounts for double-counting when two events overlap.",
+    formula:"P(A\\cup B)=P(A)+P(B)-P(A\\cap B)",
+    method:["Identify the sample space and count total outcomes n.","Count favorable outcomes m for the event.","Compute P(A)=m/n.","For combined events, apply the addition theorem to avoid double-counting overlaps."],
+    mistakes:"Forgetting to subtract P(A∩B) when events overlap, and confusing mutually exclusive events (P(A∩B)=0) with independent events.",
+    tip:"If asked for 'at least one' probability, it's often faster to compute 1 − P(none).",
+    examples:[
+      {level:'Basic',q:'A die is rolled once. Find P(even number).',given:'Sample space {1..6}.',need:'P(even).',steps:['Favorable outcomes: {2,4,6}, so m=3, n=6.'],answer:'P = 1/2'},
+      {level:'Intermediate',q:'A card is drawn from a deck. Find P(king or heart).',given:'52 cards, 4 kings, 13 hearts, 1 king-of-hearts overlap.',need:'P(king ∪ heart).',steps:['P(king)=4/52, P(heart)=13/52, P(king∩heart)=1/52','P = 4/52+13/52−1/52 = 16/52'],answer:'P = 4/13'},
+      {level:'Exam-level',q:'Two dice are rolled. Find P(sum ≥ 10).',given:'36 equally likely outcomes.',need:'P(sum≥10).',steps:['Favorable sums: (4,6),(5,5),(6,4),(5,6),(6,5),(6,6) = 6 outcomes'],answer:'P = 6/36 = 1/6'},
+    ],
+    practice:[
+      {type:'MCQ',q:'Probability of an impossible event is:',opts:['1','0','0.5','undefined'],ans:1,exp:'By definition, an impossible event has probability 0.'},
+      {type:'Numerical',q:'A coin is tossed twice. P(at least one head)?',opts:['1/4','1/2','3/4','1'],ans:2,exp:"P(no heads)=1/4, so P(at least one)=1-1/4=3/4."},
+      {type:'Conceptual',q:'Two mutually exclusive events A, B satisfy:',opts:['P(A∩B)=1','P(A∩B)=0','P(A∪B)=0','P(A)=P(B)'],ans:1,exp:'Mutually exclusive means they cannot occur together, so their intersection probability is 0.'},
+      {type:'MCQ',q:'Sum of probabilities of all outcomes in a sample space equals:',opts:['0','0.5','1','depends on n'],ans:2,exp:'Total probability across the whole sample space always sums to 1.'},
+      {type:'Application',q:'A bag has 5 red, 3 blue balls. P(blue)=?',opts:['3/8','5/8','3/5','1/8'],ans:0,exp:'3 favorable out of 8 total balls.'},
+      {type:'Short-answer',q:'P(A) + P(A complement) always equals:',opts:['0','0.5','1','P(A)'],ans:2,exp:'An event and its complement partition the whole sample space.'},
+    ],
+    quiz:[
+      {q:'P(A∪B) for mutually exclusive A,B equals:',opts:['P(A)+P(B)','P(A)·P(B)','P(A)-P(B)','0'],ans:0},
+      {q:'A probability value can be:',opts:['negative','greater than 1','between 0 and 1 inclusive','any real number'],ans:2},
+      {q:'P(A∩B) is subtracted in the addition rule to avoid:',opts:['negative probability','double-counting overlap','rounding error','division by zero'],ans:1},
+    ]
+  },
+  bayes: {
+    unit:2, title:"Conditional Probability & Bayes' Theorem",
+    concept:"Conditional probability P(A|B) is the probability of A given that B has already happened — it 'zooms in' on the world where B is true. Bayes' Theorem flips the condition around, letting you find P(cause|effect) from P(effect|cause), which is exactly what's needed in diagnosis, spam filtering, and inference problems.",
+    key:"Bayes' theorem updates your belief about a cause after observing evidence — it's the mathematical version of 'given what I now see, how likely is each explanation?'",
+    formula:"P(A|B)=\\dfrac{P(B|A)\\,P(A)}{P(B)}",
+    method:["Identify the prior probabilities P(A_i) for each possible cause.","Identify the likelihoods P(B|A_i) — probability of the evidence under each cause.","Compute P(B) using the law of total probability: P(B)=ΣP(B|A_i)P(A_i).","Apply Bayes' formula to get the posterior P(A_i|B)."],
+    mistakes:"Mixing up P(A|B) with P(B|A) — they are generally not equal. Also forgetting to normalize by the total P(B) across all causes.",
+    tip:"Always draw a tree diagram for two-stage problems (cause → evidence); it makes the total-probability denominator obvious.",
+    examples:[
+      {level:'Basic',q:"A box has 2 defective and 8 good items. Two are drawn without replacement. Find P(2nd defective | 1st defective).",given:'2 defective, 8 good, no replacement.',need:'Conditional probability.',steps:['After removing 1 defective, 1 defective and 8 good remain out of 9.'],answer:'P = 1/9'},
+      {level:'Intermediate',q:'Factory A makes 60% of items, factory B makes 40%. 2% of A\'s items and 5% of B\'s are defective. Find P(item is defective).',given:'P(A)=0.6, P(B)=0.4, P(D|A)=0.02, P(D|B)=0.05.',need:'P(D).',steps:['P(D)=P(D|A)P(A)+P(D|B)P(B) = 0.02(0.6)+0.05(0.4)'],answer:'P(D) = 0.032'},
+      {level:'Exam-level',q:'Using the previous data, if an item is defective, find P(it came from factory B).',given:'Same setup, P(D)=0.032.',need:'P(B|D).',steps:['P(B|D) = P(D|B)P(B)/P(D) = (0.05×0.4)/0.032 = 0.02/0.032'],answer:'P(B|D) = 0.625'},
+    ],
+    practice:[
+      {type:'MCQ',q:"Bayes' theorem is used to find:",opts:['P(A∪B)','P(cause | observed effect)','P(A)+P(B)','the sample space size'],ans:1,exp:"Bayes' theorem reverses a conditional probability from effect-given-cause to cause-given-effect."},
+      {type:'Conceptual',q:'P(A|B) = P(A) implies A and B are:',opts:['mutually exclusive','independent','complementary','identical'],ans:1,exp:"If knowing B doesn't change the probability of A, they are independent."},
+      {type:'Numerical',q:'If P(A)=0.5, P(B|A)=0.4, P(B)=0.3, find P(A|B).',opts:['0.67','0.24','0.12','0.3'],ans:0,exp:'P(A|B)=P(B|A)P(A)/P(B)=0.4×0.5/0.3=0.667.'},
+      {type:'Application',q:'The denominator P(B) in Bayes\' formula is computed using:',opts:['the addition theorem','the law of total probability','the complement rule','permutations'],ans:1,exp:'Law of total probability sums P(B|A_i)P(A_i) across all causes A_i.'},
+      {type:'Short-answer',q:'In general, P(A|B) and P(B|A) are:',opts:['always equal','usually different','always complementary','always 0'],ans:1,exp:"They answer different questions and are equal only in special cases (e.g. P(A)=P(B))."},
+    ],
+    quiz:[
+      {q:"Bayes' theorem formula is P(A|B) =",opts:['P(A)P(B)','P(B|A)P(A)/P(B)','P(A)/P(B)','P(A)+P(B)'],ans:1},
+      {q:'The prior probability refers to:',opts:['P(A) before observing evidence','P(A|B) after observing evidence','P(B) always','none'],ans:0},
+      {q:'Law of total probability sums over:',opts:['all possible causes','all possible effects','only two events','nothing'],ans:0},
+    ]
+  },
+  stat1: {
+    unit:3, title:'Measures of Central Tendency & Dispersion',
+    concept:"Central tendency (mean, median, mode) tells you where data tends to cluster; dispersion (variance, standard deviation) tells you how spread out the data is around that centre. Neither alone gives the full picture — two datasets can share a mean but differ wildly in spread.",
+    key:"Mean is pulled by outliers, median is not — that's why income data is usually reported as a median.",
+    formula:"\\bar x=\\dfrac{\\sum x_i}{n},\\qquad \\sigma^2=\\dfrac{\\sum (x_i-\\bar x)^2}{n}",
+    method:["Compute the mean by summing values and dividing by n.","Find the median by sorting and taking the middle value (or average of two middles).","Compute deviations from the mean, square them, average — that's variance.","Take the square root of variance for standard deviation."],
+    mistakes:"Dividing by n−1 instead of n (or vice versa) without checking whether the data is a sample or the full population; forgetting to sort before finding the median.",
+    tip:"If the mean is much larger than the median, the data is right-skewed — a quick visual check without plotting anything.",
+    examples:[
+      {level:'Basic',q:'Find the mean of 4, 8, 6, 10, 2.',given:'5 data points.',need:'Mean.',steps:['Sum = 4+8+6+10+2 = 30','Divide by n=5'],answer:'\\bar x = 6'},
+      {level:'Intermediate',q:'Find the variance of 4, 8, 6, 10, 2 (mean = 6).',given:'Same data, mean 6.',need:'Variance.',steps:['Deviations: -2,2,0,4,-4','Squares: 4,4,0,16,16 → sum=40','Variance = 40/5'],answer:'\\sigma^2 = 8'},
+      {level:'Exam-level',q:'Find the median and standard deviation of 3, 7, 7, 2, 9.',given:'5 values.',need:'Median, SD.',steps:['Sorted: 2,3,7,7,9 → median = 7','Mean = 28/5 = 5.6','Deviations²: 12.96,6.76,1.96,1.96,11.56 → sum=35.2, /5=7.04'],answer:'median = 7, \\sigma \\approx 2.65'},
+    ],
+    practice:[
+      {type:'MCQ',q:'The median is most resistant to:',opts:['sample size','outliers','sorting errors','sign errors'],ans:1,exp:'Median depends only on the middle position, not extreme values.'},
+      {type:'Numerical',q:'Mean of 2, 4, 6, 8 is:',opts:['4','5','6','20'],ans:1,exp:'Sum=20, n=4, mean=5.'},
+      {type:'Conceptual',q:'Standard deviation is:',opts:['the square of variance','the square root of variance','always equal to the mean','always 1'],ans:1,exp:'SD = √variance by definition.'},
+      {type:'Application',q:'Two datasets share the same mean but Dataset A has higher variance. This means:',opts:['A is more spread out','A is more concentrated','they are identical','A has a higher mean'],ans:0,exp:'Higher variance directly means greater spread around the mean.'},
+      {type:'Short-answer',q:'Mode refers to:',opts:['the middle value','the most frequent value','the average value','the range'],ans:1,exp:'Mode = the value(s) occurring most often.'},
+      {type:'MCQ',q:'Range of a dataset is:',opts:['mean − median','max − min','variance/mean','sum of all values'],ans:1,exp:'Range is simply the difference between the largest and smallest values.'},
+    ],
+    quiz:[
+      {q:'Formula for mean is:',opts:['Σx/n','Σx²/n','max−min','√Σx'],ans:0},
+      {q:'Variance uses:',opts:['absolute deviations','squared deviations','cubed deviations','ranks'],ans:1},
+      {q:'Which measure is least affected by outliers?',opts:['mean','median','range','variance'],ans:1},
+    ]
+  },
+  corr1: {
+    unit:3, title:'Correlation & Regression',
+    concept:"Correlation measures how strongly two variables move together, from −1 (perfect inverse) to +1 (perfect direct), with 0 meaning no linear relationship. Regression goes further — it fits a line that lets you predict one variable from the other.",
+    key:"Correlation tells you 'how strong and which direction'; regression tells you 'by how much, for a given change in x.'",
+    formula:"r=\\dfrac{\\sum(x_i-\\bar x)(y_i-\\bar y)}{\\sqrt{\\sum(x_i-\\bar x)^2\\sum(y_i-\\bar y)^2}}",
+    method:["Compute means of x and y.","Compute deviations from each mean and their products.","Divide the sum of products by the product of the deviation magnitudes — that's r (Karl Pearson's coefficient).","For regression, use the least-squares slope b=r·(σy/σx) and intercept a=ȳ−b·x̄."],
+    mistakes:"Confusing correlation (strength/direction) with causation, and mixing up which variable is independent (x) vs dependent (y) when writing the regression line.",
+    tip:"|r| close to 1 means a strong linear relationship — but always check that the relationship is actually linear, not curved, before trusting r.",
+    examples:[
+      {level:'Basic',q:'If r = 0.9 between study hours and test score, what does this suggest?',given:'r=0.9.',need:'Interpretation.',steps:['r close to +1 means a strong positive linear relationship.'],answer:'More study hours strongly associate with higher scores.'},
+      {level:'Intermediate',q:'For x: 1,2,3,4 and y: 2,4,5,8, estimate the direction of correlation without full calculation.',given:'y roughly increases as x increases.',need:'Sign of r.',steps:['As x rises, y consistently rises too — deviations tend to have matching signs.'],answer:'r is positive'},
+      {level:'Exam-level',q:'Given b (regression slope of y on x) = 2 and x̄=5, ȳ=20, find the regression line.',given:'b=2, x̄=5, ȳ=20.',need:'Line y = a + bx.',steps:['a = ȳ − b·x̄ = 20 − 2(5) = 10'],answer:'y = 10 + 2x'},
+    ],
+    practice:[
+      {type:'MCQ',q:'Correlation coefficient r ranges between:',opts:['0 and 1','-1 and 1','-∞ and ∞','0 and 100'],ans:1,exp:'By construction, Pearson\'s r is bounded between -1 and 1.'},
+      {type:'Conceptual',q:'r = 0 means:',opts:['no relationship of any kind','no linear relationship','perfect relationship','negative relationship'],ans:1,exp:'r only captures linear association; a strong nonlinear relationship can still give r≈0.'},
+      {type:'Application',q:'A strong correlation between two variables implies:',opts:['one causes the other','they tend to move together, not necessarily causally','they are equal','nothing useful'],ans:1,exp:"Correlation doesn't imply causation — a classic statistical caution."},
+      {type:'Numerical',q:'If regression slope b=3 and x increases by 2 units, y is predicted to change by:',opts:['2','3','6','1.5'],ans:2,exp:'Δy = b·Δx = 3×2 = 6.'},
+      {type:'Short-answer',q:'Spearman\'s rank correlation is used when:',opts:['data is ranked/ordinal rather than exact values','data is always numeric','only for negative correlation','never used in practice'],ans:0,exp:"Spearman's coefficient works on ranks, useful for ordinal or non-linear monotonic data."},
+      {type:'MCQ',q:'The regression line minimizes:',opts:['sum of residuals','sum of squared residuals','the correlation coefficient','the mean of y'],ans:1,exp:'Least-squares regression minimizes the sum of squared vertical distances from points to the line.'},
+    ],
+    quiz:[
+      {q:"Karl Pearson's r measures:",opts:['linear association strength/direction','causation','sample size','variance only'],ans:0},
+      {q:'Regression slope formula (y on x) is:',opts:['b=r(σy/σx)','b=r(σx/σy)','b=σx·σy','b=r²'],ans:0},
+      {q:'r=-1 indicates:',opts:['no relationship','perfect positive linear relationship','perfect negative linear relationship','undefined relationship'],ans:2},
+    ]
+  },
+  curve1: {
+    unit:3, title:'Curve Fitting',
+    concept:"Curve fitting finds the equation of a curve that best matches a set of data points, even though no single curve may pass through all of them exactly. The Least Squares Method picks the curve that minimizes the sum of squared vertical distances between the data points and the curve.",
+    key:"'Best fit' means smallest total squared error — not that the curve touches every point.",
+    formula:"S=\\sum (y_i-\\hat y_i)^2 \\;\\text{minimized}",
+    method:["Decide the form of the curve (line y=a+bx, parabola y=a+bx+cx², etc.).","Set up the normal equations by minimizing S with respect to each unknown coefficient.","Solve the normal equations simultaneously for the coefficients.","Substitute back to get the fitted curve."],
+    mistakes:"Trying to fit a straight line to clearly curved data without checking the shape first; arithmetic slips while solving the normal equations.",
+    tip:"Plot the data (even roughly) before choosing linear vs quadratic vs exponential — the shape of the scatter tells you which model to try.",
+    examples:[
+      {level:'Basic',q:'For points (1,2),(2,4),(3,6), what line would you expect to fit?',given:'Perfectly proportional data.',need:'Fitted line.',steps:['Each y = 2x exactly, so the least-squares line matches exactly.'],answer:'y = 2x'},
+      {level:'Intermediate',q:'Normal equations for y=a+bx are Σy=na+bΣx and Σxy=aΣx+bΣx². For n=3, Σx=6, Σy=12, Σxy=28, Σx²=14, find a,b.',given:'Summary statistics from data.',need:'a, b.',steps:['12=3a+6b','28=6a+14b','From first: a=4−2b. Substitute: 28=6(4−2b)+14b=24+2b → b=2, a=0'],answer:'y = 2x'},
+      {level:'Exam-level',q:'Why is the least-squares line called the "best fit" line?',given:'Definition of least squares.',need:'Justification.',steps:['It minimizes the sum of squared vertical deviations of all data points from the line — no other line of the same form gives a smaller total squared error.'],answer:'It minimizes total squared error among all lines of that form'},
+    ],
+    practice:[
+      {type:'MCQ',q:'Least squares method minimizes:',opts:['sum of deviations','sum of squared deviations','maximum deviation','product of deviations'],ans:1,exp:'Squaring avoids positive/negative deviations cancelling and penalizes larger errors more.'},
+      {type:'Conceptual',q:'A fitted curve passing through every data point exactly means:',opts:['it is always the best model','it may be overfitting the noise in the data','least squares failed','the data has no error'],ans:1,exp:'Perfect fit is often a sign of overfitting rather than a genuinely better model.'},
+      {type:'Numerical',q:'For a linear fit y=a+bx, how many normal equations are needed?',opts:['1','2','3','n'],ans:1,exp:'Two unknowns (a,b) need two normal equations.'},
+      {type:'Application',q:'For a quadratic fit y=a+bx+cx², the number of normal equations is:',opts:['2','3','4','n'],ans:1,exp:'Three unknowns (a,b,c) require three normal equations.'},
+      {type:'Short-answer',q:'Curve fitting is most useful when:',opts:['data exactly matches a known formula','data has scatter/noise and you want the underlying trend','there is only one data point','x and y are unrelated'],ans:1,exp:'It extracts the underlying trend from noisy, real-world data.'},
+    ],
+    quiz:[
+      {q:'Least squares minimizes:',opts:['Σ(y-ŷ)','Σ(y-ŷ)²','Σy','max(y-ŷ)'],ans:1},
+      {q:'Normal equations for a line have:',opts:['1 unknown','2 unknowns','3 unknowns','n unknowns'],ans:1},
+      {q:'A curve fitting exactly through noisy data is likely:',opts:['ideal','overfit','underfit','irrelevant'],ans:1},
+    ]
+  },
+  vec1: {
+    unit:4, title:'Vector Spaces, Subspaces & Linear Independence',
+    concept:"A vector space is a set of vectors closed under addition and scalar multiplication, obeying the usual algebra rules (associativity, distributivity, an additive identity). A subspace is a subset that is itself a vector space under those same operations. Vectors are linearly independent if no one of them can be written as a combination of the others — geometrically, they each point in a genuinely new direction.",
+    key:"To check a subset W is a subspace, you don't need every axiom — just confirm it contains the zero vector and is closed under addition and scalar multiplication.",
+    formula:"u,v\\in W,\\ \\alpha,\\beta\\in\\mathbb{R}\\;\\Rightarrow\\;\\alpha u+\\beta v\\in W",
+    method:["Check the zero vector belongs to the set.","Take two arbitrary elements and confirm their sum stays in the set.","Confirm any scalar multiple stays in the set.","For independence, set c1v1+...+cnvn=0 and check if the only solution is all cᵢ=0."],
+    mistakes:"Assuming a set is a subspace just because it 'looks linear' without checking zero-vector membership; forgetting that linear independence requires checking all scalars simultaneously, not pairwise.",
+    tip:"Any subset defined by a homogeneous linear equation (like x+y=0) is a subspace; one defined by a non-homogeneous equation (like x+y=1) is not, since it excludes the origin.",
+    examples:[
+      {level:'Basic',q:'Is W = {(x,y) : x+y=0} a subspace of R²?',given:'W defined by a homogeneous condition.',need:'Subspace test.',steps:['(0,0) satisfies 0+0=0 ✓','If (a,-a),(b,-b)∈W, sum=(a+b,-(a+b))∈W ✓','Scalar k(a,-a)=(ka,-ka)∈W ✓'],answer:'Yes, W is a subspace'},
+      {level:'Intermediate',q:'Are (1,2,3) and (2,4,6) linearly independent?',given:'Two vectors in R³.',need:'Independence check.',steps:['(2,4,6) = 2×(1,2,3) — one is a scalar multiple of the other.'],answer:'No, they are dependent'},
+      {level:'Exam-level',q:'Are (1,0,0), (0,1,0), (1,1,0) linearly independent in R³?',given:'Three vectors.',need:'Independence check.',steps:['c1(1,0,0)+c2(0,1,0)+c3(1,1,0)=0 gives c1+c3=0, c2+c3=0','Choosing c3=1 gives c1=-1,c2=-1 — a nonzero solution exists.'],answer:'No, they are dependent (third = sum of first two negated)'},
+    ],
+    practice:[
+      {type:'MCQ',q:'Every vector space must contain:',opts:['at least two vectors','the zero vector','only positive scalars','an infinite basis'],ans:1,exp:'The zero vector is a required element of every vector space.'},
+      {type:'Conceptual',q:'W = {(x,y): x+y=1} is:',opts:['a subspace','not a subspace, since (0,0)∉W','a subspace only if x,y>0','always a subspace of R²'],ans:1,exp:"A non-homogeneous condition excludes the origin, so it fails the zero-vector requirement."},
+      {type:'Numerical',q:'Are (1,1) and (2,2) linearly independent?',opts:['yes','no, one is a scalar multiple of the other','only in R³','cannot be determined'],ans:1,exp:'(2,2)=2×(1,1), so they are dependent.'},
+      {type:'Application',q:'A set of 4 vectors in R³ is:',opts:['always independent','always dependent','independent only if orthogonal','independent only if normalized'],ans:1,exp:'You cannot have more than 3 independent vectors in R³ — any 4th is a combination of the others.'},
+      {type:'Short-answer',q:'The intersection of two subspaces is:',opts:['never a subspace','always a subspace','only a subspace if they are equal','undefined'],ans:1,exp:'The intersection of any two subspaces always satisfies the subspace axioms.'},
+    ],
+    quiz:[
+      {q:'A subspace must contain:',opts:['the zero vector','only unit vectors','no scalar multiples','an odd number of vectors'],ans:0},
+      {q:'Vectors are linearly dependent if:',opts:['none can be written as a combination of the others','at least one is a combination of the others','they are all zero','they are orthogonal'],ans:1},
+      {q:'Max number of linearly independent vectors in R³ is:',opts:['2','3','4','infinite'],ans:1},
+    ]
+  },
+  basis1: {
+    unit:4, title:'Basis, Dimension & Rank-Nullity Theorem',
+    concept:"A basis is a linearly independent set of vectors that spans the entire vector space — every vector in the space can be written uniquely as a combination of basis vectors. The number of vectors in a basis is the dimension. For a matrix A, the Rank-Nullity theorem ties together the column space (rank) and the null space (nullity): they always add up to the number of columns.",
+    key:"Row space and column space of a matrix always have the same dimension (the rank), even though they may live in different-sized spaces.",
+    formula:"\\text{rank}(A)+\\text{nullity}(A)=n\\quad(n=\\#\\text{columns})",
+    method:["Row-reduce A to find the rank (number of pivot columns).","Nullity = n − rank, where n is the number of columns.","A basis for the null space comes from solving Ax=0 and expressing free variables.","A basis for the column space comes from the pivot columns of the original matrix."],
+    mistakes:"Using the number of rows instead of columns in the rank-nullity formula; forgetting that the null space basis vectors must satisfy Ax=0 exactly, not just look plausible.",
+    tip:"If a square matrix has nullity 0, it's invertible — rank equals n, so Ax=0 has only the trivial solution.",
+    examples:[
+      {level:'Basic',q:'A is a 3×4 matrix with rank 2. Find its nullity.',given:'n=4 columns, rank=2.',need:'nullity.',steps:['nullity = n − rank = 4 − 2'],answer:'nullity = 2'},
+      {level:'Intermediate',q:'Find the nullity of \\begin{bmatrix}1&2\\\\2&4\\end{bmatrix}.',given:'2×2 matrix, rank=1 (rows are multiples).',need:'nullity.',steps:['n=2 columns, rank=1','nullity = 2−1'],answer:'nullity = 1'},
+      {level:'Exam-level',q:'Find a basis for the null space of \\begin{bmatrix}1&2\\\\2&4\\end{bmatrix}.',given:'rank=1, nullity=1.',need:'basis vector for null space.',steps:['Solve x1+2x2=0 → x1=−2x2','Let x2=1, then x1=−2'],answer:'basis = \\{(-2,1)\\}'},
+    ],
+    practice:[
+      {type:'MCQ',q:'Dimension of a vector space equals:',opts:['number of vectors in any spanning set','number of vectors in a basis','always infinite','the rank of any matrix'],ans:1,exp:'Dimension is defined as the number of vectors in a basis (all bases of a space have the same size).'},
+      {type:'Numerical',q:'A 5×5 invertible matrix has nullity:',opts:['0','1','5','undefined'],ans:0,exp:'Invertible ⇒ rank = n = 5, so nullity = n − rank = 0.'},
+      {type:'Conceptual',q:'Rank-nullity theorem relates rank to:',opts:['trace','nullity and number of columns','determinant only','eigenvalues only'],ans:1,exp:'rank + nullity = n, where n is the number of columns of the matrix.'},
+      {type:'Application',q:'If a 4×4 matrix has nullity 2, its rank is:',opts:['2','4','6','0'],ans:0,exp:'rank = n − nullity = 4 − 2 = 2.'},
+      {type:'Short-answer',q:'A basis must be:',opts:['spanning only','independent only','both spanning and independent','none of these'],ans:2,exp:'A basis requires both properties: it spans the space AND its vectors are linearly independent.'},
+    ],
+    quiz:[
+      {q:'Rank-nullity theorem states rank + nullity =',opts:['number of rows','number of columns','determinant','trace'],ans:1},
+      {q:'A basis of a vector space is:',opts:['any spanning set','a linearly independent spanning set','the zero vector alone','the largest possible set'],ans:1},
+      {q:'An n×n matrix with nullity 0 is:',opts:['singular','invertible','symmetric','diagonal only'],ans:1},
+    ]
+  },
+  limit1: {
+    unit:5, title:'Limits, Continuity & Partial Derivatives',
+    concept:"For functions of two variables, the limit of f(x,y) as (x,y)→(a,b) must be the same no matter which path you approach along — this is stricter than the single-variable case. Continuity at a point means the limit exists and equals the function's value there. A partial derivative treats all but one variable as constant, measuring the rate of change in just that direction.",
+    key:"If two different paths toward (a,b) give different limiting values, the overall limit does not exist — a powerful way to disprove a limit.",
+    formula:"\\frac{\\partial f}{\\partial x}=\\lim_{h\\to 0}\\frac{f(x+h,y)-f(x,y)}{h}",
+    method:["To test a limit, try several paths (y=x, y=x², y=0) and compare results.","If all paths agree, the limit is likely that common value (verify formally if needed).","For partial derivatives, hold all other variables constant and differentiate normally.","Check continuity by confirming the limit equals f(a,b)."],
+    mistakes:"Concluding a limit exists after checking only one path; forgetting which variable is being held constant during partial differentiation.",
+    tip:"Approaching along y=mx (varying slope m) is a fast way to check whether a 2-variable limit depends on direction.",
+    examples:[
+      {level:'Basic',q:'Find ∂f/∂x for f(x,y)=x²y+3y.',given:'f(x,y)=x²y+3y.',need:'∂f/∂x.',steps:['Treat y as constant, differentiate x²y+3y with respect to x: 2xy+0'],answer:'\\partial f/\\partial x = 2xy'},
+      {level:'Intermediate',q:'Find ∂f/∂y for f(x,y)=x²y+3y.',given:'Same function.',need:'∂f/∂y.',steps:['Treat x as constant: x²(1)+3(1)'],answer:'\\partial f/\\partial y = x^2+3'},
+      {level:'Exam-level',q:'Does \\lim_{(x,y)\\to(0,0)} \\dfrac{xy}{x^2+y^2} exist?',given:'A rational function at the origin.',need:'Existence of limit.',steps:['Along y=0: limit = 0','Along y=x: xy/(x²+y²) = x²/2x² = 1/2','Different paths give different limits.'],answer:'The limit does not exist'},
+    ],
+    practice:[
+      {type:'MCQ',q:'A function of two variables is continuous at (a,b) if:',opts:['it is defined there only','the limit exists and equals f(a,b)','it has no partial derivatives','it is always continuous'],ans:1,exp:'Continuity requires the limit to exist AND match the function value at the point.'},
+      {type:'Conceptual',q:'If two different paths give different limiting values, the limit:',opts:['is their average','does not exist','equals the first path\'s value','is always 0'],ans:1,exp:'Path-dependence directly proves the limit does not exist.'},
+      {type:'Numerical',q:'For f(x,y)=3x²y, ∂f/∂x equals:',opts:['3x²','6xy','3y','6x'],ans:1,exp:'Differentiate with y constant: d/dx(3x²y)=6xy.'},
+      {type:'Application',q:'∂f/∂y for f(x,y)=3x²y is:',opts:['3x²','6xy','6y','3y'],ans:0,exp:'Differentiate with x constant: d/dy(3x²y)=3x².'},
+      {type:'Short-answer',q:'A partial derivative treats:',opts:['all variables as changing','all but one variable as constant','only constants as variable','nothing as constant'],ans:1,exp:"By definition — only the variable you're differentiating with respect to changes."},
+    ],
+    quiz:[
+      {q:'Partial derivative ∂f/∂x holds:',opts:['x constant','y constant','both constant','neither constant'],ans:1},
+      {q:'A limit failing along different paths means it:',opts:['exists','does not exist','equals zero','is undefined only at infinity'],ans:1},
+      {q:'Continuity at a point requires limit = ',opts:['0','the function value there','infinity','the derivative'],ans:1},
+    ]
+  },
+  maxima1: {
+    unit:5, title:'Maxima, Minima & Saddle Points',
+    concept:"For a two-variable function, critical points occur where both partial derivatives are zero. The second derivative test then classifies each critical point as a local maximum, local minimum, or saddle point (where the surface curves up in one direction and down in another, like a horse's saddle).",
+    key:"A saddle point is a critical point that is NOT a max or min — it looks flat locally but isn't a peak or valley.",
+    formula:"D=f_{xx}f_{yy}-(f_{xy})^2,\\quad D>0,f_{xx}>0\\Rightarrow\\text{min};\\ D>0,f_{xx}<0\\Rightarrow\\text{max};\\ D<0\\Rightarrow\\text{saddle}",
+    method:["Find fx and fy, set both to zero, and solve for critical points (a,b).","Compute the second partials fxx, fyy, fxy at each critical point.","Compute D = fxx·fyy − (fxy)².","Classify using the sign of D and fxx as given by the formula above."],
+    mistakes:"Forgetting to check D<0 as the saddle-point case (students often only check D>0); mixing up fxy with fyx (they're usually equal for smooth functions, so either works).",
+    tip:"If D=0, the second derivative test is inconclusive — you'd need another method (like examining the function directly).",
+    examples:[
+      {level:'Basic',q:'Find the critical point of f(x,y)=x²+y².',given:'A simple paraboloid.',need:'Critical point.',steps:['fx=2x=0 → x=0','fy=2y=0 → y=0'],answer:'(0,0)'},
+      {level:'Intermediate',q:'Classify the critical point (0,0) of f(x,y)=x²+y².',given:'Critical point found above.',need:'Max, min, or saddle.',steps:['fxx=2, fyy=2, fxy=0','D=2×2−0=4>0, and fxx=2>0'],answer:'(0,0) is a local minimum'},
+      {level:'Exam-level',q:'Classify the critical point (0,0) of f(x,y)=x²−y².',given:'A saddle-shaped surface.',need:'Classification.',steps:['fx=2x=0, fy=-2y=0 → (0,0)','fxx=2, fyy=-2, fxy=0','D=2×(-2)−0=-4<0'],answer:'(0,0) is a saddle point'},
+    ],
+    practice:[
+      {type:'MCQ',q:'A critical point occurs where:',opts:['f(x,y)=0','both fx=0 and fy=0','fxx=0 only','the function is undefined'],ans:1,exp:'Both first partial derivatives must vanish simultaneously.'},
+      {type:'Conceptual',q:'D<0 at a critical point indicates:',opts:['local maximum','local minimum','saddle point','inconclusive'],ans:2,exp:'Negative D means the surface curves oppositely in different directions — a saddle.'},
+      {type:'Numerical',q:'If D>0 and fxx<0 at a critical point, it is a:',opts:['local minimum','local maximum','saddle point','undefined'],ans:1,exp:'Positive D with negative fxx signals a local maximum (concave down).'},
+      {type:'Application',q:'D=0 at a critical point means:',opts:['it is definitely a saddle','it is definitely a max','the test is inconclusive','it is definitely a min'],ans:2,exp:'The second derivative test gives no information when D=0; another method is needed.'},
+      {type:'Short-answer',q:'fxy in the formula for D refers to:',opts:['second derivative w.r.t. x only','second derivative w.r.t. y only','mixed second partial derivative','first derivative'],ans:2,exp:'fxy is the mixed partial: differentiate once with respect to x, then once with respect to y (or vice versa).'},
+    ],
+    quiz:[
+      {q:'At a critical point, D>0 and fxx>0 means:',opts:['local min','local max','saddle','inconclusive'],ans:0},
+      {q:'A saddle point has:',opts:['D>0','D<0','D=0 always','no critical value'],ans:1},
+      {q:'Critical points require:',opts:['fx=fy=0','fxx=0','f=0','fxy=0 only'],ans:0},
+    ]
+  },
+};
+
+const FORMULAS = [
+  {topic:'rref',name:'Rank definition',tex:'\\text{rank}(A)=\\#\\text{nonzero rows in REF}'},
+  {topic:'gj',name:'Inverse via Gauss-Jordan',tex:'[A|I]\\to[I|A^{-1}]'},
+  {topic:'eigen',name:'Characteristic equation',tex:'\\det(A-\\lambda I)=0'},
+  {topic:'eigen',name:'Trace-eigenvalue identity',tex:'\\sum \\lambda_i = \\text{trace}(A)'},
+  {topic:'eigen',name:'Determinant-eigenvalue identity',tex:'\\prod \\lambda_i = \\det(A)'},
+  {topic:'lu',name:'LU Factorization',tex:'A=LU'},
+  {topic:'prob1',name:'Addition theorem',tex:'P(A\\cup B)=P(A)+P(B)-P(A\\cap B)'},
+  {topic:'bayes',name:"Bayes' Theorem",tex:'P(A|B)=\\dfrac{P(B|A)P(A)}{P(B)}'},
+  {topic:'stat1',name:'Mean & Variance',tex:'\\bar x=\\dfrac{\\sum x_i}{n},\\;\\sigma^2=\\dfrac{\\sum(x_i-\\bar x)^2}{n}'},
+  {topic:'corr1',name:"Karl Pearson's r",tex:'r=\\dfrac{\\sum(x_i-\\bar x)(y_i-\\bar y)}{\\sqrt{\\sum(x_i-\\bar x)^2\\sum(y_i-\\bar y)^2}}'},
+  {topic:'vec1',name:'Subspace test',tex:'u,v\\in W,\\ \\alpha,\\beta\\in\\mathbb{R}\\;\\Rightarrow\\;\\alpha u+\\beta v\\in W'},
+  {topic:'basis1',name:'Rank-Nullity Theorem',tex:'\\text{rank}(A)+\\text{nullity}(A)=n'},
+  {topic:'curve1',name:'Least Squares Criterion',tex:'S=\\sum (y_i-\\hat y_i)^2'},
+  {topic:'limit1',name:'Partial Derivative',tex:'\\frac{\\partial f}{\\partial x}=\\lim_{h\\to 0}\\frac{f(x+h,y)-f(x,y)}{h}'},
+  {topic:'maxima1',name:'Second Derivative Test',tex:'D=f_{xx}f_{yy}-(f_{xy})^2'},
+];
+
+const GAME_MATRIX_QS = [
+  {q:'Rank of \\begin{bmatrix}1&2\\\\2&4\\end{bmatrix}?',opts:['0','1','2','undefined'],ans:1},
+  {q:'Eigenvalues of \\begin{bmatrix}5&0\\\\0&-2\\end{bmatrix}?',opts:['5, -2','0, 0','5, 2','-5, 2'],ans:0},
+  {q:'A matrix with rank < n (n×n) is:',opts:['invertible','singular','orthogonal','symmetric'],ans:1},
+  {q:'Sum of eigenvalues equals:',opts:['determinant','trace','rank','norm'],ans:1},
+  {q:'Product of eigenvalues equals:',opts:['trace','determinant','rank','0 always'],ans:1},
+  {q:'In A=LU, diagonal of L is:',opts:['0','1','equal to U diag','random'],ans:1},
+  {q:'RREF requires pivots equal to:',opts:['0','1','row index','column index'],ans:1},
+  {q:'Rank of the 3×3 identity matrix is:',opts:['0','1','2','3'],ans:3},
+];
+const GAME_RUSH_QS = [
+  {q:'Characteristic equation:',opts:['\\det(A-\\lambda I)=0','\\det(A+I)=0','A\\lambda=I','trace(A)=0'],ans:0},
+  {q:"Bayes' Theorem:",opts:['P(A)P(B)','P(B|A)P(A)/P(B)','P(A)+P(B)','P(A)-P(B)'],ans:1},
+  {q:'Addition theorem of probability:',opts:['P(A\\cup B)=P(A)+P(B)-P(A\\cap B)','P(A\\cup B)=P(A)P(B)','P(A\\cup B)=P(A)-P(B)','P(A\\cup B)=1'],ans:0},
+  {q:'Rank definition:',opts:['\\#\\text{nonzero rows in REF}','\\det(A)','trace(A)','\\#\\text{columns}'],ans:0},
+  {q:'Inverse via Gauss-Jordan:',opts:['[A|I]\\to[I|A^{-1}]','[A|I]\\to[A|A]','A\\to A^2','[A|0]\\to[I|0]'],ans:0},
+  {q:'LU Factorization statement:',opts:['A=LU','A=UL^{-1}','A^{-1}=LU','A=L+U'],ans:0},
+  {q:'Trace-eigenvalue identity:',opts:['\\sum\\lambda_i=\\text{trace}(A)','\\prod\\lambda_i=\\text{trace}(A)','\\sum\\lambda_i=0','\\lambda_i=A_{ii}\\text{ always}'],ans:0},
+  {q:'Determinant-eigenvalue identity:',opts:['\\prod\\lambda_i=\\det(A)','\\sum\\lambda_i=\\det(A)','\\det(A)=0\\text{ always}','\\prod\\lambda_i=\\text{trace}(A)'],ans:0},
+];
+const GAMES_META = {
+  matrix:{title:'Matrix Master',emoji:'🧮',desc:'Answer matrix questions. Correct +10 XP, wrong −5 XP.',qs:GAME_MATRIX_QS,time:20},
+  rush:{title:'Formula Rush',emoji:'⚡',desc:'Pick the correct formula before time runs out.',qs:GAME_RUSH_QS,time:10},
+};
+const LEVELS = [
+  {name:'Beginner',min:0},{name:'Learner',min:100},{name:'Explorer',min:300},
+  {name:'Problem Solver',min:700},{name:'Mathematics Pro',min:1500},{name:'Mathematics Master',min:3000}
+];
+
+const ACHIEVEMENTS = [
+  {id:'first',icon:'🏅',name:'First Step',desc:'Complete your first topic.',test:s=>s.completed.length>=1},
+  {id:'streak7',icon:'🔥',name:'7-Day Streak',desc:'Learn for 7 consecutive days.',test:s=>s.streak>=7},
+  {id:'matrix',icon:'🧠',name:'Matrix Master',desc:'Complete Unit 1.',test:s=>UNITS[0].topics.every(t=>s.completed.includes(t)||TOPICS[t].stub)},
+  {id:'champ',icon:'🏆',name:'Mathematics Champion',desc:'Complete the entire course.',test:s=>Object.keys(TOPICS).every(t=>s.completed.includes(t)||TOPICS[t].stub)},
+];
+
+/* ---------- STATE ---------- */
+const DEFAULT_STATE = {xp:0,streak:0,longestStreak:0,lastActiveDate:null,completed:[],practiceStats:{attempted:0,correct:0},
+  quizScores:{},bookmarks:[],theme:'light',lastTopic:null,activityLog:{},badgesSeen:[],lastChallengeDate:null};
+let S = load();
+function load(){
+  try{ const raw=localStorage.getItem('mathsphere_state'); if(raw) return Object.assign({},DEFAULT_STATE,JSON.parse(raw)); }catch(e){}
+  return Object.assign({},DEFAULT_STATE);
+}
+function save(){
+  try{ localStorage.setItem('mathsphere_state',JSON.stringify(S)); }catch(e){}
+  if(DB && UID){ DB.doc('data/users/'+UID+'/progress').set(S).catch(()=>{}); }
+}
+let DB=null, USER=null, IS_ADMIN=false, UID=null;
+let CONFIG = {xpRewards:{practice:10,quizBase:30,topic:50,game:10,gamePenalty:5},
+  dailyChallenge:'Find the eigenvalues of \\begin{bmatrix}4&1\\\\2&3\\end{bmatrix}.', customFormulas:[], topicOverrides:{}};
+async function initBackend(){
+  try{
+    USER = await claude.use('user');
+    DB = await claude.use('db');
+    if(USER){ IS_ADMIN = await USER.canEdit(); UID = await USER.id(); }
+    if(DB && UID){
+      const snap = await DB.doc('data/users/'+UID+'/progress').get();
+      const data = snap && (snap.data ? snap.data() : snap);
+      if(data) S = Object.assign({}, DEFAULT_STATE, data);
+    }
+  }catch(e){}
+}
+async function loadConfig(){
+  if(!DB) return;
+  try{
+    const snap = await DB.doc('config/site').get();
+    const data = snap && (snap.data ? snap.data() : snap);
+    if(data) CONFIG = {xpRewards:Object.assign({},CONFIG.xpRewards,data.xpRewards||{}), dailyChallenge:data.dailyChallenge||CONFIG.dailyChallenge, customFormulas:data.customFormulas||[], topicOverrides:data.topicOverrides||{}};
+  }catch(e){}
+}
+async function saveConfig(){
+  if(!DB) return;
+  try{ await DB.doc('config/site').set(CONFIG); toast('Saved'); }catch(e){ toast('Save failed'); }
+}
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function markActiveToday(){
+  const t = todayStr();
+  if(S.lastActiveDate === t) return;
+  const y = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  S.streak = (S.lastActiveDate === y) ? S.streak+1 : 1;
+  S.longestStreak = Math.max(S.longestStreak, S.streak);
+  S.lastActiveDate = t;
+  S.activityLog[t] = true;
+  save();
+}
+function addXP(n){ S.xp += n; save(); toast('+'+n+' XP'); checkAchievements(); render(); }
+function level(){ let lv=LEVELS[0]; for(const l of LEVELS){ if(S.xp>=l.min) lv=l; } return lv; }
+function nextLevel(){ const cur=level(); const idx=LEVELS.indexOf(cur); return LEVELS[idx+1]||null; }
+function checkAchievements(){
+  for(const a of ACHIEVEMENTS){ if(a.test(S) && !S.badgesSeen.includes(a.id)){ S.badgesSeen.push(a.id); toast('Badge unlocked: '+a.icon+' '+a.name); } }
+  save();
+}
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.toggle('badge', msg.indexOf('Badge unlocked')===0); t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2200); }
+
+/* ---------- RENDER ---------- */
+let route = 'home', activeTopic=null, quizState=null, gameState=null;
+function nav(r,arg){
+  if(route==='gameplay' && r!=='gameplay' && gameState && gameState.timerId){ clearInterval(gameState.timerId); }
+  route=r; if(arg) activeTopic=arg; render(); window.scrollTo(0,0);
+}
+
+function katexify(el){
+  el.querySelectorAll('.tex').forEach(n=>{
+    try{ katex.render(n.dataset.tex, n, {throwOnError:false}); }catch(e){ n.textContent = n.dataset.tex; }
+  });
+}
+function tex(s){ return `<span class="tex" data-tex="${s.replace(/"/g,'&quot;')}"></span>`; }
+
+function render(){
+  document.documentElement.setAttribute('data-theme', S.theme);
+  const navItems = IS_ADMIN ? NAV.concat([['admin','🛠️ Admin']]) : NAV;
+  const side = document.getElementById('side');
+  side.innerHTML = `<div class="brand">∞ MathSphere</div>` + navItems.map(([r,l])=>
+    `<button class="nav-item ${route===r?'active':''}" onclick="nav('${r}')">${l}</button>`).join('');
+  const mbar = document.getElementById('mbar');
+  mbar.innerHTML = navItems.map(([r,l])=>{const [emoji,...rest]=l.split(' ');return `<button class="${route===r?'active':''}" onclick="nav('${r}')"><span>${emoji}</span>${rest.join(' ')}</button>`}).join('');
+  const main = document.getElementById('main');
+  main.innerHTML = ({
+    home: renderHome, learn: renderLearn, topic: renderTopic, formulas: renderFormulas,
+    quiz: renderQuiz, dashboard: renderDashboard, achievements: renderAchievements, settings: renderSettings,
+    games: renderGamesHub, gameplay: renderGameplay, admin: renderAdmin
+  }[route] || renderHome)();
+  katexify(main);
+  if(route==='admin' && IS_ADMIN) loadTopicEditor();
+  main.classList.remove('fade-in'); void main.offsetWidth; main.classList.add('fade-in');
+}
+
+function renderHome(){
+  const lv=level(), nl=nextLevel();
+  return `
+  <section class="hero">
+    <h1>Master Engineering Mathematics</h1>
+    <p>Learn. Practice. Play. Improve. — Applied Engineering Mathematics I</p>
+    <div class="btnrow">
+      <button class="btn" onclick="nav('learn')">Start Learning</button>
+      ${S.lastTopic?`<button class="btn ghost" onclick="nav('topic','${S.lastTopic}')">Continue: ${TOPICS[S.lastTopic].title}</button>`:''}
+    </div>
+    <div style="margin-top:16px" class="btnrow">
+      <span class="pill">🔥 Streak: ${S.streak}d</span>
+      <span class="pill">⭐ XP: ${S.xp}</span>
+      <span class="pill">🎓 ${lv.name}${nl?` · ${nl.min-S.xp} XP to ${nl.name}`:' (max level)'}</span>
+    </div>
+  </section>
+  <section class="block">
+    <h2>Explore Everything</h2>
+    <div class="grid">
+      <div class="card"><h3>📘 Learn</h3><p class="tag">5 units — concepts, formulas & step-by-step methods.</p><button class="btn ghost" onclick="nav('learn')">Open</button></div>
+      <div class="card"><h3>∑ Formula Hub</h3><p class="tag">Unit-wise, searchable formula sheet — bookmark & copy.</p><button class="btn ghost" onclick="nav('formulas')">Open</button></div>
+      <div class="card"><h3>✍️ Practice Questions</h3><p class="tag">MCQ, numerical & conceptual questions inside every topic.</p><button class="btn ghost" onclick="nav('learn')">Practice</button></div>
+      <div class="card"><h3>🧠 Mini Quiz</h3><p class="tag">Quick per-topic quizzes with instant score & XP.</p><button class="btn ghost" onclick="nav('learn')">Take a Quiz</button></div>
+      <div class="card"><h3>🎮 Games</h3><p class="tag">Matrix Master & Formula Rush — timed challenges for XP.</p><button class="btn ghost" onclick="nav('games')">Play</button></div>
+      <div class="card"><h3>📊 Dashboard</h3><p class="tag">XP, streak, level, accuracy & bookmarks in one place.</p><button class="btn ghost" onclick="nav('dashboard')">View</button></div>
+      <div class="card"><h3>🏅 Achievements</h3><p class="tag">Unlock badges as you complete units & streaks.</p><button class="btn ghost" onclick="nav('achievements')">View</button></div>
+    </div>
+  </section>
+  <section class="block">
+    <h2>🎯 Daily Challenge</h2>
+    <div class="card"><div class="formula-box">${tex(CONFIG.dailyChallenge)}</div>
+      <button class="btn ghost" onclick="completeDailyChallenge()" ${S.lastChallengeDate===todayStr()?'disabled':''}>
+        ${S.lastChallengeDate===todayStr()?'Completed today':'Mark Complete (+'+CONFIG.xpRewards.quizBase+' XP)'}
+      </button>
+    </div>
+  </section>
+  <section class="block">
+    <h2>Your Course</h2>
+    <div class="grid">
+      ${UNITS.map(u=>unitCard(u)).join('')}
+    </div>
+  </section>`;
+}
+function unitProgress(u){
+  const real = u.topics.filter(t=>!TOPICS[t].stub);
+  if(!real.length) return 0;
+  const done = real.filter(t=>S.completed.includes(t)).length;
+  return Math.round(done/real.length*100);
+}
+function unitCard(u){
+  const pct = unitProgress(u);
+  return `<div class="card">
+    <div class="tag">Unit ${u.id}</div>
+    <h3>${u.icon} ${u.title}</h3>
+    <div class="tag">${u.topics.length} topics</div>
+    <div class="progress"><i style="width:${pct}%"></i></div>
+    <div class="tag">${pct}% complete</div>
+    <button class="btn ghost" style="margin-top:10px" onclick="nav('learn')">Open</button>
+  </div>`;
+}
+function renderLearn(){
+  return `<h1>Learn</h1>
+  <input class="searchbar" placeholder="Search topics or formulas…" oninput="doSearch(this.value)">
+  <div id="searchResults"></div>
+  ${UNITS.map(u=>`
+    <section class="block">
+      <h2>${u.icon} Unit ${u.id} — ${u.title}</h2>
+      ${u.topics.map(tid=>{
+        const t=TOPICS[tid]; const done=S.completed.includes(tid); const bm=S.bookmarks.includes(tid);
+        return `<div class="topic-row" onclick="${t.stub?'':`nav('topic','${tid}')`}" style="${t.stub?'cursor:default':''}">
+          <div>
+            <div>${t.title}</div>
+            ${t.stub?'<span class="tag">Coming soon — content structure ready</span>':`<span class="tag">${done?'Completed':'Not started'}</span>`}
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            ${!t.stub?`<button class="bookmark" onclick="event.stopPropagation();toggleBookmark('${tid}')">${bm?'★':'☆'}</button>`:''}
+            <span class="badge ${done?'done':''}">${done?'✓':''}</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </section>`).join('')}`;
+}
+function doSearch(q){
+  const box = document.getElementById('searchResults');
+  if(!q || q.length<2){ box.innerHTML=''; return; }
+  q=q.toLowerCase();
+  const topicHits = Object.entries(TOPICS).filter(([id,t])=>!t.stub && t.title.toLowerCase().includes(q));
+  const formHits = FORMULAS.filter(f=>f.name.toLowerCase().includes(q));
+  box.innerHTML = `<div class="card">
+    ${topicHits.length?'<div class="tag">Topics</div>'+topicHits.map(([id,t])=>`<div class="topic-row" onclick="nav('topic','${id}')"><div>${t.title}</div></div>`).join(''):''}
+    ${formHits.length?'<div class="tag">Formulas</div>'+formHits.map(f=>`<div>${f.name}: ${tex(f.tex)}</div>`).join(''):''}
+    ${!topicHits.length && !formHits.length?'<div class="tag">No results</div>':''}
+  </div>`;
+  katexify(box);
+}
+function toggleBookmark(id){
+  S.bookmarks = S.bookmarks.includes(id) ? S.bookmarks.filter(x=>x!==id) : [...S.bookmarks,id];
+  save(); render();
+}
+function effectiveTopic(id){
+  const base = TOPICS[id]; if(!base || base.stub) return base;
+  const ov = (CONFIG.topicOverrides||{})[id] || {};
+  return Object.assign({}, base, {
+    concept: ov.concept || base.concept,
+    key: ov.key || base.key,
+    tip: ov.tip || base.tip,
+    practice: base.practice.concat(ov.extraPractice||[])
+  });
+}
+function renderTopic(){
+  const raw = TOPICS[activeTopic];
+  if(!raw || raw.stub) return `<p>Topic not available yet.</p>`;
+  const t = effectiveTopic(activeTopic);
+  S.lastTopic = activeTopic; save();
+  return `
+  <button class="btn ghost" onclick="nav('learn')">← Back to Learn</button>
+  <h1 style="margin-top:14px">${t.title}</h1>
+  <section class="block"><h2>Concept</h2><p>${t.concept}</p></section>
+  <section class="block"><h2>Key Idea</h2><p>${t.key}</p></section>
+  <section class="block"><h2>Important Formula</h2><div class="formula-box">${tex(t.formula)}</div></section>
+  <section class="block"><h2>Step-by-Step Method</h2><ol>${t.method.map(m=>`<li>${m}</li>`).join('')}</ol></section>
+  <section class="block"><h2>Common Mistakes</h2><p>${t.mistakes}</p></section>
+  <section class="block"><h2>Exam Tip</h2><p>💡 ${t.tip}</p></section>
+  <section class="block"><h2>Solved Examples</h2>
+    ${t.examples.map(ex=>`<div class="example">
+      <h4>${ex.level}</h4>
+      <p><strong>Q:</strong> ${tex(ex.q)}</p>
+      <p><strong>Given:</strong> ${ex.given} &nbsp; <strong>Required:</strong> ${ex.need}</p>
+      <ol>${ex.steps.map(s=>`<li>${tex(s)}</li>`).join('')}</ol>
+      <p><strong>Answer:</strong> ${tex(ex.answer)}</p>
+    </div>`).join('')}
+  </section>
+  <section class="block"><h2>Practice Questions</h2><div id="practiceArea">${renderPracticeList(t)}</div></section>
+  <section class="block">
+    <button class="btn" onclick="startQuiz('${activeTopic}')">Take Mini Quiz (${t.quiz.length} Qs)</button>
+    <button class="btn ghost" onclick="completeTopic('${activeTopic}')" ${S.completed.includes(activeTopic)?'disabled':''}>
+      ${S.completed.includes(activeTopic)?'✓ Topic Completed':'Mark Topic Complete (+50 XP)'}
+    </button>
+  </section>`;
+}
+function renderPracticeList(t){
+  return t.practice.map((q,i)=>`
+    <div class="qcard" id="p-${i}">
+      <div class="tag">${q.type}</div>
+      <p>${tex(q.q)}</p>
+      ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerPractice(${i},${oi})">${tex(o)}</button>`).join('')}
+      <p class="tag" id="exp-${i}" style="display:none"></p>
+    </div>`).join('');
+}
+function answerPractice(i,oi){
+  const t = effectiveTopic(activeTopic); const q=t.practice[i];
+  const card = document.getElementById('p-'+i);
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach((el,idx)=>{
+    el.onclick=null;
+    if(idx===q.ans) el.classList.add('correct');
+    else if(idx===oi) el.classList.add('wrong');
+  });
+  const exp = document.getElementById('exp-'+i);
+  exp.style.display='block';
+  exp.textContent = (oi===q.ans?'✓ Correct. ':'✗ Incorrect. ') + q.exp;
+  S.practiceStats.attempted++;
+  if(oi===q.ans){
+    S.practiceStats.correct++; S.xp += CONFIG.xpRewards.practice;
+    markActiveToday(); save(); toast('+'+CONFIG.xpRewards.practice+' XP'); checkAchievements();
+  } else { markActiveToday(); save(); }
+  katexify(card);
+}
+function completeTopic(id){
+  if(!S.completed.includes(id)){ S.completed.push(id); save(); markActiveToday(); addXP(CONFIG.xpRewards.topic); }
+  render();
+}
+function startQuiz(id){
+  quizState = {topic:id, idx:0, correct:0, answered:false};
+  nav('quiz');
+}
+function renderQuiz(){
+  if(!quizState) return `<p>No quiz in progress. <button class="btn" onclick="nav('learn')">Go to Learn</button></p>`;
+  const t = TOPICS[quizState.topic];
+  if(quizState.idx >= t.quiz.length){
+    const pct = Math.round(quizState.correct/t.quiz.length*100);
+    const xp = quizState.correct*CONFIG.xpRewards.practice;
+    if(!quizState.xpGiven){ S.quizScores[quizState.topic]=pct; save(); markActiveToday(); quizState.xpGiven=true; addXP(xp+CONFIG.xpRewards.quizBase); }
+    return `<h1>Quiz Complete</h1>
+      <div class="card">
+        <p>Score: ${quizState.correct}/${t.quiz.length} (${pct}%)</p>
+        <p>XP earned: ${xp+CONFIG.xpRewards.quizBase}</p>
+        <div class="btnrow">
+          <button class="btn ghost" onclick="startQuiz('${quizState.topic}')">Retry Quiz</button>
+          <button class="btn" onclick="nav('topic','${quizState.topic}')">Back to Topic</button>
+        </div>
+      </div>`;
+  }
+  const q = t.quiz[quizState.idx];
+  return `<h1>Mini Quiz — ${t.title}</h1>
+  <p class="tag">${quizState.idx+1}/${t.quiz.length}</p>
+  <div class="qcard">
+    <p>${tex(q.q)}</p>
+    ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerQuiz(${oi})" ${quizState.answered?'disabled':''}>${tex(o)}</button>`).join('')}
+  </div>`;
+}
+function answerQuiz(oi){
+  if(quizState.answered) return;
+  const t = TOPICS[quizState.topic]; const q=t.quiz[quizState.idx];
+  quizState.answered=true;
+  if(oi===q.ans) quizState.correct++;
+  setTimeout(()=>{ quizState.idx++; quizState.answered=false; render(); }, 650);
+  render();
+  // show feedback immediately on the clicked options
+  const opts = document.querySelectorAll('#main .qcard .opt');
+  opts.forEach((el,idx)=>{ if(idx===q.ans) el.classList.add('correct'); else if(idx===oi) el.classList.add('wrong'); el.disabled=true; });
+}
+let formulaFilter = 'all';
+function formulaUnit(f){ return f.unit!=null ? f.unit : (TOPICS[f.topic]?TOPICS[f.topic].unit:0); }
+function formulaLabel(f){ return f.topic ? TOPICS[f.topic].title : (f.label||'Admin-added'); }
+function allFormulas(){ return FORMULAS.concat(CONFIG.customFormulas||[]); }
+function renderFormulas(){
+  return `<h1>Formula Hub</h1>
+  <input class="searchbar" placeholder="Search formulas (e.g. Bayes, eigen)…" oninput="filterFormulas(this.value)">
+  <div class="btnrow" style="margin-bottom:16px">
+    <button class="btn ${formulaFilter==='all'?'':'ghost'}" onclick="setFormulaFilter('all')">All</button>
+    ${UNITS.map(u=>`<button class="btn ${formulaFilter===u.id?'':'ghost'}" onclick="setFormulaFilter(${u.id})">Unit ${u.id}</button>`).join('')}
+  </div>
+  <div id="formList">${formulaGrouped()}</div>`;
+}
+function setFormulaFilter(f){ formulaFilter=f; render(); }
+function formulaGrouped(){
+  const list = formulaFilter==='all' ? allFormulas() : allFormulas().filter(f=>formulaUnit(f)===formulaFilter);
+  if(!list.length) return `<p class="tag">No formulas found.</p>`;
+  const units = formulaFilter==='all' ? UNITS : UNITS.filter(u=>u.id===formulaFilter);
+  return units.map(u=>{
+    const items = list.filter(f=>formulaUnit(f)===u.id);
+    if(!items.length) return '';
+    return `<h3 style="margin-top:20px">Unit ${u.id} — ${u.title}</h3>` + items.map(formulaCard).join('');
+  }).join('');
+}
+function formulaCard(f){
+  return `<div class="card" style="margin-bottom:10px">
+    <div class="tag">${formulaLabel(f)}</div>
+    <h3>${f.name}</h3>
+    <div class="formula-box">${tex(f.tex)}</div>
+    <button class="btn ghost" onclick="copyFormula('${f.tex.replace(/'/g,"\\'")}')">Copy</button>
+  </div>`;
+}
+function filterFormulas(q){
+  const box=document.getElementById('formList');
+  q=q.toLowerCase();
+  if(!q){ box.innerHTML=formulaGrouped(); katexify(box); return; }
+  const list = allFormulas().filter(f=>f.name.toLowerCase().includes(q) || formulaLabel(f).toLowerCase().includes(q));
+  box.innerHTML = list.length ? list.map(formulaCard).join('') : `<p class="tag">No formulas found.</p>`;
+  katexify(box);
+}
+function copyFormula(t){ navigator.clipboard?.writeText(t).catch(()=>{}); toast('Formula copied'); }
+function renderDashboard(){
+  const lv=level();
+  const days = [...Array(7)].map((_,i)=>{ const d=new Date(Date.now()-(6-i)*86400000); return d.toISOString().slice(0,10); });
+  const dayLabels=['S','M','T','W','T','F','S'];
+  return `<h1>Welcome back 👋</h1>
+  <div class="grid">
+    <div class="card"><div class="tag">Streak</div><h3>🔥 ${S.streak} days</h3></div>
+    <div class="card"><div class="tag">Total XP</div><h3>⭐ ${S.xp}</h3></div>
+    <div class="card"><div class="tag">Level</div><h3>${lv.name}</h3></div>
+    <div class="card"><div class="tag">Topics Completed</div><h3>${S.completed.length}/${Object.values(TOPICS).filter(t=>!t.stub).length}</h3></div>
+    <div class="card"><div class="tag">Practice Accuracy</div><h3>${S.practiceStats.attempted?Math.round(S.practiceStats.correct/S.practiceStats.attempted*100):0}%</h3></div>
+    <div class="card"><div class="tag">Longest Streak</div><h3>🏆 ${S.longestStreak}d</h3></div>
+  </div>
+  <section class="block">
+    <h2>Activity — Last 7 Days</h2>
+    <div class="streakcal">${days.map((d,i)=>`<div class="sday ${S.activityLog[d]?'hit':''}">${dayLabels[i]}</div>`).join('')}</div>
+  </section>
+  <section class="block">
+    <h2>Unit Progress</h2>
+    ${UNITS.map(u=>`<div style="margin-bottom:10px"><div class="tag">Unit ${u.id} — ${u.title}</div><div class="progress"><i style="width:${unitProgress(u)}%"></i></div></div>`).join('')}
+  </section>
+  <section class="block">
+    <h2>Bookmarks</h2>
+    ${S.bookmarks.length? S.bookmarks.map(id=>`<div class="topic-row" onclick="nav('topic','${id}')"><div>${TOPICS[id].title}</div></div>`).join('') : '<p class="tag">No bookmarks yet — star a topic from Learn.</p>'}
+  </section>`;
+}
+function renderAchievements(){
+  return `<h1>Achievements</h1><div class="grid">
+    ${ACHIEVEMENTS.map(a=>{ const got=a.test(S); return `<div class="card ${got?'':'locked'}">
+      <h3>${a.icon} ${a.name}</h3><p class="tag">${a.desc}</p><p class="tag">${got?'Unlocked':'Locked'}</p>
+    </div>`; }).join('')}
+  </div>`;
+}
+function renderSettings(){
+  const themes = [['light','☀️ Light'],['dark','🌙 Dark'],['midnight','🌌 Midnight'],['purple','💜 Purple'],['nature','🌿 Nature'],['minimal','🧊 Minimal']];
+  return `<h1>Settings</h1>
+  <section class="block"><h2>Theme</h2>
+  <div class="themes">${themes.map(([id,l])=>`<div class="theme-sw ${S.theme===id?'sel':''}" onclick="setTheme('${id}')">${l}</div>`).join('')}</div>
+  </section>
+  <section class="block"><h2>Data</h2>
+  <p class="tag">Progress is saved locally in this browser.</p>
+  <button class="btn ghost" onclick="resetProgress()">Reset All Progress</button>
+  </section>`;
+}
+function renderGamesHub(){
+  return `<h1>Games</h1><p class="tag">Sharpen your skills under time pressure.</p>
+  <div class="grid">
+    ${Object.entries(GAMES_META).map(([id,g])=>`<div class="card">
+      <h3>${g.emoji} ${g.title}</h3><p class="tag">${g.desc}</p>
+      <button class="btn" onclick="startGame('${id}')">Play</button>
+    </div>`).join('')}
+  </div>`;
+}
+function startGame(type){
+  const g = GAMES_META[type];
+  gameState = {type, idx:0, score:0, timeLeft:g.time, timerId:null, locked:false};
+  nav('gameplay');
+  runGameTimer();
+}
+function runGameTimer(){
+  clearInterval(gameState.timerId);
+  gameState.timerId = setInterval(()=>{
+    gameState.timeLeft--;
+    const bar = document.getElementById('gtBar'); const lbl = document.getElementById('gtLbl');
+    if(bar){ const g=GAMES_META[gameState.type]; bar.style.width = Math.max(0,gameState.timeLeft/g.time*100)+'%'; }
+    if(lbl) lbl.textContent = Math.max(0,gameState.timeLeft)+'s';
+    if(gameState.timeLeft<=0){ clearInterval(gameState.timerId); if(!gameState.locked) gameAnswer(-1); }
+  },1000);
+}
+function renderGameplay(){
+  if(!gameState) return `<p>No game in progress. <button class="btn" onclick="nav('games')">Go to Games</button></p>`;
+  const g = GAMES_META[gameState.type];
+  if(gameState.idx >= g.qs.length){
+    markActiveToday(); checkAchievements();
+    return `<h1>${g.emoji} ${g.title} — Finished</h1>
+    <div class="card"><p>Score: ${gameState.score}/${g.qs.length}</p>
+      <div class="btnrow">
+        <button class="btn ghost" onclick="startGame('${gameState.type}')">Play Again</button>
+        <button class="btn" onclick="nav('games')">Back to Games</button>
+      </div>
+    </div>`;
+  }
+  const q = g.qs[gameState.idx];
+  return `<h1>${g.emoji} ${g.title}</h1>
+  <p class="tag">Question ${gameState.idx+1}/${g.qs.length} · Score ${gameState.score} · <span id="gtLbl">${gameState.timeLeft}s</span></p>
+  <div class="timerbar"><i id="gtBar" style="width:${gameState.timeLeft/g.time*100}%"></i></div>
+  <div class="qcard">
+    <p>${tex(q.q)}</p>
+    ${q.opts.map((o,oi)=>`<button class="game-choice" onclick="gameAnswer(${oi})" ${gameState.locked?'disabled':''}>${tex(o)}</button>`).join('')}
+  </div>`;
+}
+function gameAnswer(oi){
+  if(gameState.locked) return;
+  gameState.locked = true;
+  clearInterval(gameState.timerId);
+  const g = GAMES_META[gameState.type]; const q = g.qs[gameState.idx];
+  const correct = oi===q.ans;
+  if(correct){ gameState.score++; S.xp+=CONFIG.xpRewards.game; toast('+'+CONFIG.xpRewards.game+' XP'); } else { S.xp=Math.max(0,S.xp-CONFIG.xpRewards.gamePenalty); if(oi>=0) toast('-'+CONFIG.xpRewards.gamePenalty+' XP'); }
+  save();
+  render();
+  const btns = document.querySelectorAll('#main .qcard .game-choice');
+  btns.forEach((el,idx)=>{ el.disabled=true; if(idx===q.ans) el.classList.add('correct'); else if(idx===oi) el.classList.add('wrong'); });
+  setTimeout(()=>{
+    gameState.idx++; gameState.locked=false; gameState.timeLeft=g.time;
+    if(gameState.idx<g.qs.length) runGameTimer();
+    render();
+  },700);
+}
+function completeDailyChallenge(){
+  if(S.lastChallengeDate===todayStr()) return;
+  S.lastChallengeDate=todayStr(); save(); markActiveToday(); addXP(CONFIG.xpRewards.quizBase);
+}
+function renderAdmin(){
+  if(!IS_ADMIN) return `<h1>Admin</h1><p class="tag">You need editor access on this artifact to manage content.</p>`;
+  return `<h1>Admin Panel</h1>
+  <p class="tag">Signed in with editor access · changes apply to every student viewing this page.</p>
+  <section class="block"><h2>Daily Challenge</h2>
+    <textarea id="admChallenge" class="searchbar" rows="2">${CONFIG.dailyChallenge}</textarea>
+    <p class="tag">Written as LaTeX (rendered with KaTeX).</p>
+  </section>
+  <section class="block"><h2>XP Rewards</h2>
+    <div class="grid">
+      ${Object.entries(CONFIG.xpRewards).map(([k,v])=>`<div class="card">
+        <div class="tag">${k}</div>
+        <input id="adm_${k}" type="number" value="${v}" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)">
+      </div>`).join('')}
+    </div>
+  </section>
+  <section class="block"><h2>Edit Topic Content</h2>
+    <select id="admTopicSel" class="searchbar" onchange="loadTopicEditor()">
+      ${Object.entries(TOPICS).filter(([id,tp])=>!tp.stub).map(([id,tp])=>`<option value="${id}">${tp.title}</option>`).join('')}
+    </select>
+    <div id="topicEditorBox"></div>
+  </section>
+  <section class="block"><h2>Manage Formulas</h2>
+    <div class="card">
+      <select id="admFUnit" class="searchbar">${UNITS.map(u=>`<option value="${u.id}">Unit ${u.id} — ${u.title}</option>`).join('')}</select>
+      <input id="admFName" class="searchbar" placeholder="Formula name">
+      <input id="admFTex" class="searchbar" placeholder="LaTeX, e.g. E=mc^2">
+      <button class="btn" onclick="addFormula()">Add Formula</button>
+    </div>
+    ${(CONFIG.customFormulas||[]).length ? '<p class="tag" style="margin-top:12px">Admin-added</p>'+CONFIG.customFormulas.map((f,i)=>`
+      <div class="topic-row"><div>${f.name} — Unit ${f.unit}</div><button class="btn ghost" onclick="removeFormula(${i})">Delete</button></div>`).join('') : ''}
+  </section>
+  <button class="btn" onclick="saveAdmin()">Save Changes</button>`;
+}
+function loadTopicEditor(){
+  const sel = document.getElementById('admTopicSel'); if(!sel) return;
+  const id = sel.value; const t = effectiveTopic(id);
+  document.getElementById('topicEditorBox').innerHTML = `
+    <div class="card" style="margin-top:12px">
+      <div class="tag">Concept</div>
+      <textarea id="admConcept" class="searchbar" rows="3">${t.concept}</textarea>
+      <div class="tag">Key Idea</div>
+      <textarea id="admKey" class="searchbar" rows="2">${t.key}</textarea>
+      <div class="tag">Exam Tip</div>
+      <textarea id="admTip" class="searchbar" rows="2">${t.tip}</textarea>
+      <button class="btn" onclick="saveTopicContent('${id}')">Save Content</button>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="tag">Add Practice Question</div>
+      <input id="admQType" class="searchbar" placeholder="Type e.g. MCQ, Numerical">
+      <textarea id="admQText" class="searchbar" rows="2" placeholder="Question (LaTeX allowed)"></textarea>
+      <input id="admQOpts" class="searchbar" placeholder="Options, comma-separated">
+      <input id="admQAns" class="searchbar" type="number" placeholder="Correct option index (0-based)">
+      <input id="admQExp" class="searchbar" placeholder="Explanation">
+      <button class="btn ghost" onclick="addPracticeQ('${id}')">Add Question</button>
+    </div>`;
+}
+function saveTopicContent(id){
+  CONFIG.topicOverrides = CONFIG.topicOverrides || {};
+  CONFIG.topicOverrides[id] = Object.assign({}, CONFIG.topicOverrides[id], {
+    concept: document.getElementById('admConcept').value,
+    key: document.getElementById('admKey').value,
+    tip: document.getElementById('admTip').value,
+  });
+  saveConfig();
+}
+function addPracticeQ(id){
+  const type = document.getElementById('admQType').value.trim()||'MCQ';
+  const q = document.getElementById('admQText').value.trim();
+  const opts = document.getElementById('admQOpts').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const ans = Number(document.getElementById('admQAns').value)||0;
+  const exp = document.getElementById('admQExp').value.trim();
+  if(!q || opts.length<2){ toast('Add a question and at least 2 options'); return; }
+  CONFIG.topicOverrides = CONFIG.topicOverrides || {};
+  const ov = CONFIG.topicOverrides[id] = CONFIG.topicOverrides[id] || {};
+  ov.extraPractice = ov.extraPractice || [];
+  ov.extraPractice.push({type,q,opts,ans,exp});
+  saveConfig();
+  document.getElementById('admQText').value=''; document.getElementById('admQOpts').value='';
+  toast('Question added');
+}
+function addFormula(){
+  const unit = Number(document.getElementById('admFUnit').value);
+  const name = document.getElementById('admFName').value.trim();
+  const tx = document.getElementById('admFTex').value.trim();
+  if(!name || !tx){ toast('Enter a name and formula'); return; }
+  CONFIG.customFormulas = CONFIG.customFormulas || [];
+  CONFIG.customFormulas.push({unit,name,tex:tx});
+  saveConfig(); render();
+}
+function removeFormula(i){ CONFIG.customFormulas.splice(i,1); saveConfig(); render(); }
+function saveAdmin(){
+  CONFIG.dailyChallenge = document.getElementById('admChallenge').value;
+  Object.keys(CONFIG.xpRewards).forEach(k=>{ CONFIG.xpRewards[k] = Number(document.getElementById('adm_'+k).value)||0; });
+  saveConfig();
+}
+function setTheme(id){ S.theme=id; save(); render(); }
+function resetProgress(){ if(confirm('Reset all progress? This cannot be undone.')){ S=Object.assign({},DEFAULT_STATE); save(); nav('home'); } }
+
+/* ---------- INIT ---------- */
+(function(){
+  const overlay = document.getElementById('introOverlay');
+  const seen = sessionStorage.getItem('mathsphere_intro_seen');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(seen || reduced){ overlay.remove(); }
+  else{
+    sessionStorage.setItem('mathsphere_intro_seen','1');
+    const dismiss = ()=>{ overlay.classList.add('hide'); setTimeout(()=>overlay.remove(),700); };
+    setTimeout(dismiss, 1500);
+    overlay.addEventListener('click', dismiss);
+  }
+})();
+render();
+(async()=>{
+  await initBackend();
+  await loadConfig();
+  markActiveToday();
+  render();
+})();
+</script>
+</body>
+</html>
